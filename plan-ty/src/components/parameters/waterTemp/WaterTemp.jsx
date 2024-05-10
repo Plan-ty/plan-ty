@@ -4,6 +4,12 @@ import axios from "axios";
 function WaterTemp() {
   const [data, setData] = useState([]);
   const [inputValue, setInputValue] = useState("");
+  const [upperDangerInput, setUpperDangerInput] = useState("");
+  const [lowerDangerInput, setLowerDangerInput] = useState("");
+  const [upperWarningInput, setUpperWarningInput] = useState("");
+  const [lowerWarningInput, setLowerWarningInput] = useState("");
+  const [upperNotificationToggle, setUpperNotificationToggle] = useState(false);
+  const [lowerNotificationToggle, setLowerNotificationToggle] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -34,8 +40,72 @@ function WaterTemp() {
       });
   };
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const sendThresholdData = (upperValue, lowerValue, thresholdType) => {
+    axios
+      .post("http://localhost:3001/data", {
+        upperValue,
+        lowerValue,
+        thresholdType,
+      })
+      .then((response) => {
+        console.log("Thresholds sent successfully:", response.data);
+        // After sending the data, fetch updated data to refresh the view
+        fetchData();
+        // Clear input fields based on threshold type
+        if (thresholdType === "danger") {
+          setUpperDangerInput("");
+          setLowerDangerInput("");
+        } else if (thresholdType === "warning") {
+          setUpperWarningInput("");
+          setLowerWarningInput("");
+        }
+      })
+      .catch((error) => {
+        console.error("Error sending thresholds:", error);
+      });
+  };
+
+  const toggleUpperNotification = () => {
+    const newUpperNotificationToggle = !upperNotificationToggle;
+  setUpperNotificationToggle(newUpperNotificationToggle);
+  
+  // Send notification status to backend for upper threshold
+  axios
+    .post("http://localhost:3001/data", {
+      upperEnabled: newUpperNotificationToggle,
+      lowerEnabled: lowerNotificationToggle // Keep lower threshold status unchanged
+    })
+    .then((response) => {
+      console.log("Upper Notification status sent successfully:", response.data);
+    })
+    .catch((error) => {
+      console.error("Error sending upper notification status:", error);
+    });
+   
+  };
+
+  const toggleLowerNotification = () => {
+    const newLowerNotificationToggle = !lowerNotificationToggle;
+  setLowerNotificationToggle(newLowerNotificationToggle);
+
+  // Send notification status to backend for lower threshold
+  axios
+    .post("http://localhost:3001/data", {
+      upperEnabled: upperNotificationToggle, // Keep upper threshold status unchanged
+      lowerEnabled: newLowerNotificationToggle
+    })
+    .then((response) => {
+      console.log("Lower Notification status sent successfully:", response.data);
+    })
+    .catch((error) => {
+      console.error("Error sending lower notification status:", error);
+    });
+    
+  };
+  
+  const handleInputChange = (event, setValue) => {
+    setValue(event.target.value);
+    //indirectly used here as a callback function for handling input changes, thats why its giving a warning
   };
 
   //TODO: do it as a component so that it can always be displayed on each page
@@ -48,58 +118,63 @@ function WaterTemp() {
     <div>
         <h1>WATER TEMPERATURE</h1>
 
-        <div className="lastFetched" >
-            <p>Last Fetched at: {showTime} - {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} </p>
-            <p>Error placeholder</p>
-        </div>
-        <div>
+            <div className="lastFetched" >
+                <p>Last Fetched at: {showTime} - {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} </p>
+               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
+                <p>Error placeholder</p>
+            </div>
+            <div>
+                <input
+                type="text"
+                value={inputValue}
+                onChange={(event) => setInputValue(event.target.value)}
+                placeholder="Enter your data"/>
+            <button onClick={sendData}>Send Data</button>
+            </div>
+            <div className="dangerThresholds">
+                <p>Danger Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
+                {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperThresh}, Lower: {item.lowerThresh}</div>))} */}
+                <input
+                type="text"
+                value={upperDangerInput}
+                onChange={(event) => setUpperDangerInput(event.target.value)}
+                placeholder="Enter Upper Level"/>
+            <button onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput,"danger")}>Set Upper</button>
             <input
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder="Enter your data"/>
-        <button onClick={sendData}>Send Data</button>
-        </div>
-        <div className="dangerThresholds">
-            <p>Danger Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
+                type="text"
+                value={lowerDangerInput}
+                onChange={(event) => setLowerDangerInput(event.target.value)}
+                placeholder="Enter Lower Level"/>
+            <button onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput, "danger")}>Set Lower</button>
+            </div>
+            <div className="warningThresholds">
+                <p>Warning Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
+                {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperWarn}, Lower: {item.lowerWarn}</div>))} */}
+                <input
+                type="text"
+                value={upperWarningInput}
+                onChange={(event) => setUpperWarningInput(event.target.value)}
+                placeholder="Enter Upper Level"/>
+            <button onClick={() => sendThresholdData(upperWarningInput, lowerWarningInput, "warning")}>Set Upper</button>
             <input
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder="Enter Upper Level"/>
-        <button onClick={sendData}>Set Data</button>
-        <input
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder="Enter Lower Level"/>
-        <button onClick={sendData}>Set Data</button>
-        </div>
-        <div className="warningThresholds">
-            <p>Warning Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
-            <input
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder="Enter Upper Level"/>
-        <button onClick={sendData}>Set Data</button>
-        <input
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder="Enter Lower Level"/>
-        <button onClick={sendData}>Set Data</button>
-        </div>
-        <div className="notifications">
-        <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
-        <p>Upper: <button>On/Off</button> Lower: <button>On/Off</button></p>
-        </div>
-        <div className="graph">
-            <p>Graph: GraphComponent/</p>
-        </div>
-
-    </div>
-    
+                type="text"
+                value={lowerWarningInput}
+                onChange={(event) => setLowerWarningInput(event.target.value)}
+                placeholder="Enter Lower Level"/>
+            <button onClick={() => sendThresholdData(upperWarningInput, lowerWarningInput, "warning")}>Set Lower</button>
+            </div>
+            <div className="notifications">
+            <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
+              {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperNotif}, Lower: {item.lowerNotif}</div>))} */}
+            <p>
+              Upper:{" "}<button onClick={toggleUpperNotification}>{upperNotificationToggle ? "On" : "Off"}</button>{" "}
+              Lower:{" "}<button onClick={toggleLowerNotification}>{lowerNotificationToggle ? "On" : "Off"}</button>
+            </p>
+          </div>
+          <div className="graph">
+              <p>Graph: GraphComponent/</p>
+          </div>
+        </div>    
 );
 }
 
