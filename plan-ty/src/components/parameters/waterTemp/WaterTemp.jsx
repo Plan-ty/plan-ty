@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-<<<<<<< Updated upstream
 import Switch from "../../Switch/Switch";
-=======
 import './../../parameters/Parameters.css';
->>>>>>> Stashed changes
 
 function WaterTemp() {
   const [data, setData] = useState([]);
@@ -125,23 +122,25 @@ function WaterTemp() {
   return (
     <div className="everyhing">
         <h1>WATER TEMPERATURE</h1>
-<<<<<<< Updated upstream
-
-            <div className="lastFetched" >
-                <p>Last Fetched at: {showTime} - {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} </p>
+        <div className="container">
+          <div className="box1">
+          <div className="lastFetched" id="left">
+          <p>Last Fetched at: {showTime} - {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} </p>
                {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
                 <p>Error placeholder</p>
-            </div>
-            <div>
-                <input
+          </div>
+          <div className="sendData" id="right">
+          <input
                 type="text"
                 value={inputValue}
                 onChange={(event) => setInputValue(event.target.value)}
                 placeholder="Enter your data"/>
             <button onClick={sendData}>Send Data</button>
-            </div>
-            <div className="dangerThresholds">
-                <p>Danger Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
+          </div>
+          </div>
+          <div className="box2">
+          <div className="dangerThresholds" id="left">
+          <p>Danger Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
                 {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperThresh}, Lower: {item.lowerThresh}</div>))} */}
                 <input
                 type="text"
@@ -155,9 +154,9 @@ function WaterTemp() {
                 onChange={(event) => setLowerDangerInput(event.target.value)}
                 placeholder="Enter Lower Level"/>
             <button onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput, "danger")}>Set Lower</button>
-            </div>
-            <div className="warningThresholds">
-                <p>Warning Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
+          </div>
+          <div className="warningThresholds" id="right">
+          <p>Warning Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
                 {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperWarn}, Lower: {item.lowerWarn}</div>))} */}
                 <input
                 type="text"
@@ -171,8 +170,9 @@ function WaterTemp() {
                 onChange={(event) => setLowerWarningInput(event.target.value)}
                 placeholder="Enter Lower Level"/>
             <button onClick={() => sendThresholdData(upperWarningInput, lowerWarningInput, "warning")}>Set Lower</button>
-            </div>
-            <div className="notifications">
+          </div>
+          </div>
+          <div className="notifications">
             <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
               {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperNotif}, Lower: {item.lowerNotif}</div>))} */}
             <p>
@@ -185,68 +185,10 @@ function WaterTemp() {
         <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
         <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
         </div>
-        <div className="graph">
-            <p>Graph: GraphComponent/</p>
-        </div>
-
-=======
-        <div className="container">
-          <div className="box1">
-          <div className="lastFetched" id="left">
-              <p>Last Fetched at: {showTime} - {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} </p>
-              <p id="error">Error placeholder</p>
-          </div>
-          <div className="sendData" id="right">
-              <input
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Enter your data"/>
-          <button className="button" onClick={sendData}>Send Data</button>
-          </div>
-          </div>
-          <div className="box2">
-          <div className="dangerThresholds" id="left">
-              <p>Danger Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
-              <input
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Enter Upper Level"/>
-          <button className="button" onClick={sendData}>Set Data</button>
-          <input
-              className="lower"
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Enter Lower Level"/>
-          <button className="button" onClick={sendData}>Set Data</button>
-          </div>
-          <div className="warningThresholds" id="right">
-              <p>Warning Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
-              <input
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Enter Upper Level"/>
-          <button className="button" onClick={sendData}>Set Data</button>
-          <input
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Enter Lower Level"/>
-          <button className="button" onClick={sendData}>Set Data</button>
-          </div>
-          </div>
-          <div className="notifications" >
-          <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
-          <p>Upper: <button>On/Off</button> Lower: <button>On/Off</button></p>
-          </div>
           <div className="graph">
               <p>Graph: GraphComponent/</p>
           </div>
         </div>
->>>>>>> Stashed changes
     </div>
     
 );
