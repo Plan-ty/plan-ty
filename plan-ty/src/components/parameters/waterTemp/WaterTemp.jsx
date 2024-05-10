@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Switch from "../../Switch/Switch";
 
 function WaterTemp() {
   const [data, setData] = useState([]);
@@ -108,6 +109,9 @@ function WaterTemp() {
     //indirectly used here as a callback function for handling input changes, thats why its giving a warning
   };
 
+  const [isToggled, setIsToggledUpper] = useState(false);
+  const [isToggledLower, setIsToggledLower] = useState(false);
+
   //TODO: do it as a component so that it can always be displayed on each page
   const date = new Date();
     const showTime = date.getHours() 
@@ -170,11 +174,18 @@ function WaterTemp() {
               Upper:{" "}<button onClick={toggleUpperNotification}>{upperNotificationToggle ? "On" : "Off"}</button>{" "}
               Lower:{" "}<button onClick={toggleLowerNotification}>{lowerNotificationToggle ? "On" : "Off"}</button>
             </p>
-          </div>
-          <div className="graph">
-              <p>Graph: GraphComponent/</p>
-          </div>
-        </div>    
+          </div>    
+            
+        <div className="notifications">
+        <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
+        <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
+        </div>
+        <div className="graph">
+            <p>Graph: GraphComponent/</p>
+        </div>
+
+    </div>
+    
 );
 }
 
