@@ -121,21 +121,23 @@ function WaterTemp() {
 
   return (
     <div className="everyhing">
+      <div>
         <h1>WATER TEMPERATURE</h1>
         <div className="container">
           <div className="box1">
           <div className="lastFetched" id="left">
           <p>Last Fetched at: {showTime} - {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} </p>
                {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
-                <p>Error placeholder</p>
+                <p id="error">Error placeholder</p>
           </div>
           <div className="sendData" id="right">
           <input
+                id="sendData"
                 type="text"
                 value={inputValue}
                 onChange={(event) => setInputValue(event.target.value)}
                 placeholder="Enter your data"/>
-            <button onClick={sendData}>Send Data</button>
+            <button className="button" onClick={sendData}>Send Data</button>
           </div>
           </div>
           <div className="box2">
@@ -143,33 +145,37 @@ function WaterTemp() {
           <p>Danger Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
                 {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperThresh}, Lower: {item.lowerThresh}</div>))} */}
                 <input
+                id="upper"
                 type="text"
                 value={upperDangerInput}
                 onChange={(event) => setUpperDangerInput(event.target.value)}
                 placeholder="Enter Upper Level"/>
-            <button onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput,"danger")}>Set Upper</button>
-            <input
+            <button className="button1" onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput,"danger")}>Set Upper</button>
+                <input
+                id="lower"
                 type="text"
                 value={lowerDangerInput}
                 onChange={(event) => setLowerDangerInput(event.target.value)}
                 placeholder="Enter Lower Level"/>
-            <button onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput, "danger")}>Set Lower</button>
-          </div>
+            <button className="button2" onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput, "danger")}>Set Lower</button>          
+            </div>
           <div className="warningThresholds" id="right">
           <p>Warning Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
                 {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperWarn}, Lower: {item.lowerWarn}</div>))} */}
                 <input
+                id="upper"
                 type="text"
                 value={upperWarningInput}
                 onChange={(event) => setUpperWarningInput(event.target.value)}
                 placeholder="Enter Upper Level"/>
-            <button onClick={() => sendThresholdData(upperWarningInput, lowerWarningInput, "warning")}>Set Upper</button>
+            <button className="button1" onClick={() => sendThresholdData(upperWarningInput, lowerWarningInput, "warning")}>Set Upper</button>
             <input
+                id="lower"
                 type="text"
                 value={lowerWarningInput}
                 onChange={(event) => setLowerWarningInput(event.target.value)}
                 placeholder="Enter Lower Level"/>
-            <button onClick={() => sendThresholdData(upperWarningInput, lowerWarningInput, "warning")}>Set Lower</button>
+            <button className="button2" onClick={() => sendThresholdData(upperWarningInput, lowerWarningInput, "warning")}>Set Lower</button>
           </div>
           </div>
           <div className="notifications">
@@ -188,10 +194,12 @@ function WaterTemp() {
           <div className="graph">
               <p>Graph: GraphComponent/</p>
           </div>
-        </div>
+          </div>
+    </div>
     </div>
     
 );
 }
+
 
 export default WaterTemp;
