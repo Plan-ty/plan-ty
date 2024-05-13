@@ -195,10 +195,11 @@ function WaterTemp() {
               <p>Graph: GraphComponent/</p>
           </div>
           </div>
-          </div>
+    </div>
     </div>
     
 );
 }
+
 
 export default WaterTemp;
