@@ -1,7 +1,7 @@
 import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import NavBar from "./components/navBar/NavBar";
+import NavBar from './components/navbar/NavBar'
 import WaterTemp from "./components/parameters/waterTemp/WaterTemp";
 
 import Home from "./components/home/Home";

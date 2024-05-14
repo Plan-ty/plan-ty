@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Nav } from "react-bootstrap"; // Import Nav from react-bootstrap
+import  Nav  from 'react-bootstrap/Nav'; // Import Nav from react-bootstrap
 import "./NavBar.css";
 
 function Navbar() {

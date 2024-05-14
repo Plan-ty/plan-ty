@@ -68,6 +68,13 @@ input[type="text"], textarea {
 
 }
 
+.graph{
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    margin-top: 5%;
+}
+
 
 @media (max-width: 1177.60px) {
     #lower, #upper, #sendData{
