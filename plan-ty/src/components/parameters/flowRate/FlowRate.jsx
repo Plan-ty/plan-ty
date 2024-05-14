@@ -144,17 +144,7 @@ function FlowRate() {
               {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
               <p id="error">Error placeholder</p>
-            </div>
-            <div className="sendData" id="right">
-              <input
-
-          <div className="lastFetched" id="left">
-            {/* !!!!!Change the plant.rate to the name of the actual value passed in the json object */}
-          <p>Last Fetched at: {showTime} - {plant.rate} gallons/square foot</p>
-          {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
-               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
-                <p id="error">Error placeholder</p>
-          </div>
+            </div>          
           <div className="sendData" id="right">
           <input
 
@@ -257,22 +247,7 @@ function FlowRate() {
               </button>
             </div>
           </div>
-          <div className="notifications">
-            <p>Notifications: </p>
-            {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
-            {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperNotif}, Lower: {item.lowerNotif}</div>))} */}
-            <p>
-              Upper:{" "}
-              <button onClick={toggleUpperNotification}>
-                {upperNotificationToggle ? "On" : "Off"}
-              </button>{" "}
-              Lower:{" "}
-              <button onClick={toggleLowerNotification}>
-                {lowerNotificationToggle ? "On" : "Off"}
-              </button>
-            </p>
-          </div>
-
+          
           <div className="notifications">
             <p>Notifications: </p>
             {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}

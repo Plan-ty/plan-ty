@@ -182,16 +182,7 @@ function ElectricConduc() {
                 placeholder="Enter Lower Level"/>
             <button className="button2" onClick={() => sendThresholdData(upperWarningInput, lowerWarningInput, "warning")}>Set Lower</button>
           </div>
-          </div>
-          <div className="notifications">
-            <p>Notifications: </p>
-            {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
-              {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperNotif}, Lower: {item.lowerNotif}</div>))} */}
-            <p>
-              Upper:{" "}<button onClick={toggleUpperNotification}>{upperNotificationToggle ? "On" : "Off"}</button>{" "}
-              Lower:{" "}<button onClick={toggleLowerNotification}>{lowerNotificationToggle ? "On" : "Off"}</button>
-            </p>
-          </div>    
+          </div>   
             
         <div className="notifications">
         <p>Notifications: </p>
