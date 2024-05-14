@@ -17,7 +17,7 @@ function WaterTemp() {
   const [isToggledLower, setIsToggledLower] = useState(false);
 
   useEffect(() => {
-    //fetchData();
+    fetchData();
   }, []);
 
   const fetchData = async () => {
