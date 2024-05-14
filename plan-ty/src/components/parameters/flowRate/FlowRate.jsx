@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Switch from "../../Switch/Switch";
 import './../../parameters/Parameters.css';
+import Chart from './../../charts/Chart'
 
 function FlowRate() {
   const [plant, setPlant] = useState([]);
@@ -198,8 +199,9 @@ function FlowRate() {
         {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
         <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
         </div>
-          <div className="graph">
-              <p>Graph: GraphComponent/</p>
+        <div className="graph">
+              <p>Graph:</p>
+              <Chart dataKey="flowRate" yAxisLabel="Flow Rate GPM" />
           </div>
           </div>
     </div>

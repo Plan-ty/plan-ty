@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Switch from "../../Switch/Switch";
 import './../../parameters/Parameters.css';
+import Chart from './../../charts/Chart'
 
 function ElectricConduc() {
   const [data, setData] = useState([]);
@@ -182,8 +183,9 @@ function ElectricConduc() {
         <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
         <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
         </div>
-          <div className="graph">
-              <p>Graph: GraphComponent/</p>
+        <div className="graph">
+              <p>Graph:</p>
+              <Chart dataKey="electricConductivity" yAxisLabel="EC uS/cm" />
           </div>
           </div>
     </div>  
