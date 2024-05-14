@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Switch from "../../Switch/Switch";
 import "./../../parameters/Parameters.css";
-import Chart from "./../../charts/Chart";
+import Chart from "../../charts/Chart";
 
-function FlowRate() {
+function PHLevels() {
   const [plant, setPlant] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [upperDangerInput, setUpperDangerInput] = useState("");
@@ -22,8 +22,7 @@ function FlowRate() {
 
   const fetchData = async () => {
     await axios
-    //!!!!!change the link here for connecting to actual backend
-      .get("http://localhost:8989/plants/flowRate")
+      .get("http://localhost:8989/plants/ph")
       .then((response) => {
         setPlant(response.data);
       })
@@ -36,12 +35,7 @@ function FlowRate() {
 
   const sendData = () => {
     axios
-
       .post("http://localhost:3001/data", inputValue)
-
-    //!!!!!change the link here for connecting to actual backend
-      .post("http://localhost:3001/data", inputValue )
-
       .then((response) => {
         console.log("Data sent successfully:", response.data);
         // After sending the data, fetch updated data to refresh the view
@@ -131,15 +125,14 @@ function FlowRate() {
     date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
   return (
-    <div className="everyhing">
+    <div id="pHLevels" className="everyhing">
       <div>
-        <h1>WATER FLOW RATE</h1>
+        <h1>WATER pH LEVELS</h1>
         <div className="container">
           <div className="box1">
-
             <div className="lastFetched" id="left">
               <p>
-                Last Fetched at: {showTime} - {plant.rate} gallons/square foot
+                Last Fetched at: {showTime} - {plant.rate} acidity/basicity
               </p>
               {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
@@ -147,17 +140,6 @@ function FlowRate() {
             </div>
             <div className="sendData" id="right">
               <input
-
-          <div className="lastFetched" id="left">
-            {/* !!!!!Change the plant.rate to the name of the actual value passed in the json object */}
-          <p>Last Fetched at: {showTime} - {plant.rate} gallons/square foot</p>
-          {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
-               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
-                <p id="error">Error placeholder</p>
-          </div>
-          <div className="sendData" id="right">
-          <input
-
                 id="sendData"
                 type="text"
                 value={inputValue}
@@ -291,7 +273,7 @@ function FlowRate() {
           </div>
           <div className="graph">
             <p>Graph:</p>
-            <Chart dataKey="flowRate" yAxisLabel="Flow Rate GPM" />
+            <Chart dataKey="waterpH" yAxisLabel="acidity/bacidity" />
           </div>
         </div>
       </div>
@@ -299,4 +281,4 @@ function FlowRate() {
   );
 }
 
-export default FlowRate;
+export default PHLevels;

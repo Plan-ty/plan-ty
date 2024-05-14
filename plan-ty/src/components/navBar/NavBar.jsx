@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import  Nav  from "react-bootstrap/Nav"; // Import Nav from react-bootstrap
+import Nav from "react-bootstrap/Nav"; // Import Nav from react-bootstrap
 import "./NavBar.css";
 
 function Navbar() {
@@ -83,17 +83,27 @@ function Navbar() {
               onClick={closeMenu}
               className="navbar--content"
             >
-              Flow Rate
-              </Nav.Link>
-            </li>
-            <li>
-              <Nav.Link
+              Water Flow Rate
+            </Nav.Link>
+          </li>
+          <li>
+            <Nav.Link
               as={Link}
               to="/electricConduc"
               onClick={closeMenu}
               className="navbar--content"
             >
               Electric Conductivity
+            </Nav.Link>
+          </li>
+          <li>
+            <Nav.Link
+              as={Link}
+              to="/pH"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              Water pH Levels
             </Nav.Link>
           </li>
           {/* Add additional navigation links here */}

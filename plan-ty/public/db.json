@@ -3,7 +3,7 @@
       "id": 0,
       "time": 9,
       "waterTemperature": 22,
-      "waterPh": 8.4,
+      "waterpH": 8.4,
       "electricConductivity": 100,
       "flowRate": 6
     },
@@ -11,7 +11,7 @@
       "id": 1,
       "time": 10,
       "waterTemperature": 22,
-      "waterPh": 8,
+      "waterpH": 8,
       "electricConductivity": 120,
       "flowRate": 10
     },
@@ -19,7 +19,7 @@
       "id": 2,
       "time": 11,
       "waterTemperature": 24,
-      "waterPh": 7.5,
+      "waterpH": 7.5,
       "electricConductivity": 130,
       "flowRate": 8
     },
@@ -27,7 +27,7 @@
       "id": 3,
       "time": 12,
       "waterTemperature": 23,
-      "waterPh": 8,
+      "waterpH": 8,
       "electricConductivity": 125,
       "flowRate": 9
     },
@@ -35,7 +35,7 @@
       "id": 4,
       "time": 13,
       "waterTemperature": 21,
-      "waterPh": 8.4,
+      "waterpH": 8.4,
       "electricConductivity": 110,
       "flowRate": 10
     }
