@@ -3,7 +3,7 @@ import axios from "axios";
 import Switch from "../../Switch/Switch";
 import './../../parameters/Parameters.css';
 
-function WaterTemp() {
+function ElectricConduc() {
   const [data, setData] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [upperDangerInput, setUpperDangerInput] = useState("");
@@ -122,7 +122,7 @@ function WaterTemp() {
   return (
     
       <div>
-        <h1>WATER TEMPERATURE</h1>
+        <h1>ELECTRIC CONDUCTIVITY</h1>
         <div className="container">
           <div className="box1">
           <div className="lastFetched" id="left">
@@ -191,4 +191,4 @@ function WaterTemp() {
 }
 
 
-export default WaterTemp;
+export default ElectricConduc;

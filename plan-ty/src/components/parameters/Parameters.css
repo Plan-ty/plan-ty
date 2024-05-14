@@ -39,9 +39,9 @@ input[type="text"], textarea {
   }
 
 
-.notifications{
-    justify-content: center;
-    align-items: center;
+.notifications, .currentThresholds, .energyUsage{
+   justify-content:center;
+   align-items:center;
 }
   
 .button, .button1, .button2{
@@ -82,6 +82,10 @@ input[type="text"], textarea {
 
 }
 
+h1{
+    color: #000;
+    margin-top: 125px;
+}
 
 
 
