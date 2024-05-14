@@ -76,6 +76,16 @@ function Navbar() {
               Water Temperature
             </Nav.Link>
           </li>
+          <li>
+            <Nav.Link
+              as={Link}
+              to="/flowRate"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              Flow Rate
+            </Nav.Link>
+          </li>
           {/* Add additional navigation links here */}
         </ul>
       </div>
