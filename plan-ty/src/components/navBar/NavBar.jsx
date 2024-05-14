@@ -84,6 +84,11 @@ function Navbar() {
               className="navbar--content"
             >
               Flow Rate
+              </Nav.Link>
+            </li>
+            <li>
+              <Nav.Link
+              as={Link}
               to="/electricConduc"
               onClick={closeMenu}
               className="navbar--content"
