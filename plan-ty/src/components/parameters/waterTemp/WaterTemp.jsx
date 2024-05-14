@@ -22,6 +22,7 @@ function WaterTemp() {
 
   const fetchData = async () => {
     await axios
+    //!!!!!change the link here for connecting to actual backend
       .get("http://localhost:8989/plants")
       .then((response) => {
         setPlant(response.data);
@@ -108,7 +109,6 @@ function WaterTemp() {
     .catch((error) => {
       console.error("Error sending lower notification status:", error);
     });
-    
   };
   
   const handleInputChange = (event, setValue) => {
@@ -130,6 +130,7 @@ function WaterTemp() {
         <div className="container">
           <div className="box1">
           <div className="lastFetched" id="left">
+            {/* !!!!!Change the plant.waterTemperature to the name of the actual value passed in the json object */}
           <p>Last Fetched at: {showTime} - {plant.waterTemperature}°C</p>
           {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
                {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}

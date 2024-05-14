@@ -22,6 +22,7 @@ function FlowRate() {
 
   const fetchData = async () => {
     await axios
+    //!!!!!change the link here for connecting to actual backend
       .get("http://localhost:8989/plants/flowRate")
       .then((response) => {
         setPlant(response.data);
@@ -35,7 +36,12 @@ function FlowRate() {
 
   const sendData = () => {
     axios
+
       .post("http://localhost:3001/data", inputValue)
+
+    //!!!!!change the link here for connecting to actual backend
+      .post("http://localhost:3001/data", inputValue )
+
       .then((response) => {
         console.log("Data sent successfully:", response.data);
         // After sending the data, fetch updated data to refresh the view
@@ -130,6 +136,7 @@ function FlowRate() {
         <h1>WATER FLOW RATE</h1>
         <div className="container">
           <div className="box1">
+
             <div className="lastFetched" id="left">
               <p>
                 Last Fetched at: {showTime} - {plant.rate} gallons/square foot
@@ -140,6 +147,17 @@ function FlowRate() {
             </div>
             <div className="sendData" id="right">
               <input
+
+          <div className="lastFetched" id="left">
+            {/* !!!!!Change the plant.rate to the name of the actual value passed in the json object */}
+          <p>Last Fetched at: {showTime} - {plant.rate} gallons/square foot</p>
+          {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
+               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
+                <p id="error">Error placeholder</p>
+          </div>
+          <div className="sendData" id="right">
+          <input
+
                 id="sendData"
                 type="text"
                 value={inputValue}

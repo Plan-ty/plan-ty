@@ -5,7 +5,7 @@ import './../../parameters/Parameters.css';
 import Chart from './../../charts/Chart'
 
 function ElectricConduc() {
-  const [data, setData] = useState([]);
+  const [plant, setPlant] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [upperDangerInput, setUpperDangerInput] = useState("");
   const [lowerDangerInput, setLowerDangerInput] = useState("");
@@ -13,16 +13,19 @@ function ElectricConduc() {
   const [lowerWarningInput, setLowerWarningInput] = useState("");
   const [upperNotificationToggle, setUpperNotificationToggle] = useState(false);
   const [lowerNotificationToggle, setLowerNotificationToggle] = useState(false);
+  const [isToggled, setIsToggledUpper] = useState(false);
+  const [isToggledLower, setIsToggledLower] = useState(false);
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const fetchData = () => {
-    axios
-      .get("http://localhost:3001/data")
+  const fetchData = async () => {
+    await axios
+    //!!!!!change the link here for connecting to actual backend
+      .get("http://localhost:8989/plants/conductivity")
       .then((response) => {
-        setData(response.data);
+        setPlant(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -111,9 +114,6 @@ function ElectricConduc() {
     //indirectly used here as a callback function for handling input changes, thats why its giving a warning
   };
 
-  const [isToggled, setIsToggledUpper] = useState(false);
-  const [isToggledLower, setIsToggledLower] = useState(false);
-
   //TODO: do it as a component so that it can always be displayed on each page
   const date = new Date();
     const showTime = date.getHours() 
@@ -127,7 +127,9 @@ function ElectricConduc() {
         <div className="container">
           <div className="box1">
           <div className="lastFetched" id="left">
-          <p>Last Fetched at: {showTime} - {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} </p>
+            {/* Change the plant.conductivity to the name of the actual value passed in the json object */}
+          <p>Last Fetched at: {showTime} - {plant.conductivity}</p>
+          {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
                {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
                 <p id="error">Error placeholder</p>
           </div>
@@ -143,7 +145,8 @@ function ElectricConduc() {
           </div>
           <div className="box2">
           <div className="dangerThresholds" id="left">
-          <p>Danger Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
+          <p>Danger Levels: </p>
+          {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
                 {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperThresh}, Lower: {item.lowerThresh}</div>))} */}
                 <input
                 id="upper"
@@ -161,7 +164,8 @@ function ElectricConduc() {
             <button className="button2" onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput, "danger")}>Set Lower</button>          
             </div>
           <div className="warningThresholds" id="right">
-          <p>Warning Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
+          <p>Warning Levels: </p>
+          {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
                 {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperWarn}, Lower: {item.lowerWarn}</div>))} */}
                 <input
                 id="upper"
@@ -179,8 +183,19 @@ function ElectricConduc() {
             <button className="button2" onClick={() => sendThresholdData(upperWarningInput, lowerWarningInput, "warning")}>Set Lower</button>
           </div>
           </div>
+          <div className="notifications">
+            <p>Notifications: </p>
+            {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
+              {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperNotif}, Lower: {item.lowerNotif}</div>))} */}
+            <p>
+              Upper:{" "}<button onClick={toggleUpperNotification}>{upperNotificationToggle ? "On" : "Off"}</button>{" "}
+              Lower:{" "}<button onClick={toggleLowerNotification}>{lowerNotificationToggle ? "On" : "Off"}</button>
+            </p>
+          </div>    
+            
         <div className="notifications">
-        <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
+        <p>Notifications: </p>
+        {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
         <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
         </div>
         <div className="graph">
