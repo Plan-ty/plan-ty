@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Switch from "../../Switch/Switch";
 import './../../parameters/Parameters.css';
-import Chart from './../../charts/Chart'
 
-function WaterTemp() {
-  const [plant, setPlant] = useState([]);
+function ElectricConduc() {
+  const [data, setData] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [upperDangerInput, setUpperDangerInput] = useState("");
   const [lowerDangerInput, setLowerDangerInput] = useState("");
@@ -13,34 +12,29 @@ function WaterTemp() {
   const [lowerWarningInput, setLowerWarningInput] = useState("");
   const [upperNotificationToggle, setUpperNotificationToggle] = useState(false);
   const [lowerNotificationToggle, setLowerNotificationToggle] = useState(false);
-  const [isToggled, setIsToggledUpper] = useState(false);
-  const [isToggledLower, setIsToggledLower] = useState(false);
 
   useEffect(() => {
-    //fetchData();
+    fetchData();
   }, []);
 
-  const fetchData = async () => {
-    await axios
-      .get("http://localhost:8989/plants")
+  const fetchData = () => {
+    axios
+      .get("http://localhost:3001/data")
       .then((response) => {
-        setPlant(response.data);
+        setData(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   };
 
-  if (!plant) return null;
-
-
   const sendData = () => {
     axios
-      .post("http://192.168.156.250:5021/Plants/1/temperature", inputValue )
+      .post("http://localhost:3001/data", inputValue )
       .then((response) => {
         console.log("Data sent successfully:", response.data);
         // After sending the data, fetch updated data to refresh the view
-        //fetchData();
+        fetchData();
         setInputValue(""); // Clear input field
       })
       .catch((error) => {
@@ -50,7 +44,7 @@ function WaterTemp() {
 
   const sendThresholdData = (upperValue, lowerValue, thresholdType) => {
     axios
-      .post("http://192.168.156.250:5021/Plants/1/temperature", {
+      .post("http://localhost:3001/data", {
         upperValue,
         lowerValue,
         thresholdType,
@@ -79,7 +73,7 @@ function WaterTemp() {
   
   // Send notification status to backend for upper threshold
   axios
-    .post("http://192.168.156.250:5021/Plants/1/temperature", {
+    .post("http://localhost:3001/data", {
       upperEnabled: newUpperNotificationToggle,
       lowerEnabled: lowerNotificationToggle // Keep lower threshold status unchanged
     })
@@ -98,7 +92,7 @@ function WaterTemp() {
 
   // Send notification status to backend for lower threshold
   axios
-    .post("http://192.168.156.250:5021/Plants/1/temperature", {
+    .post("http://localhost:3001/data", {
       upperEnabled: upperNotificationToggle, // Keep upper threshold status unchanged
       lowerEnabled: newLowerNotificationToggle
     })
@@ -116,22 +110,23 @@ function WaterTemp() {
     //indirectly used here as a callback function for handling input changes, thats why its giving a warning
   };
 
+  const [isToggled, setIsToggledUpper] = useState(false);
+  const [isToggledLower, setIsToggledLower] = useState(false);
+
   //TODO: do it as a component so that it can always be displayed on each page
   const date = new Date();
     const showTime = date.getHours() 
         + ':' + date.getMinutes() 
         + ":" + date.getSeconds();
 
-       // console.log(data.waterTemperature)
   return (
     
       <div>
-        <h1>WATER TEMPERATURE</h1>
+        <h1>ELECTRIC CONDUCTIVITY</h1>
         <div className="container">
           <div className="box1">
           <div className="lastFetched" id="left">
-          <p>Last Fetched at: {showTime} - {plant.waterTemperature}°C</p>
-          {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
+          <p>Last Fetched at: {showTime} - {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} </p>
                {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
                 <p id="error">Error placeholder</p>
           </div>
@@ -147,8 +142,7 @@ function WaterTemp() {
           </div>
           <div className="box2">
           <div className="dangerThresholds" id="left">
-          <p>Danger Levels: </p>
-          {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
+          <p>Danger Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
                 {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperThresh}, Lower: {item.lowerThresh}</div>))} */}
                 <input
                 id="upper"
@@ -166,8 +160,7 @@ function WaterTemp() {
             <button className="button2" onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput, "danger")}>Set Lower</button>          
             </div>
           <div className="warningThresholds" id="right">
-          <p>Warning Levels: </p>
-          {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
+          <p>Warning Levels: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
                 {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperWarn}, Lower: {item.lowerWarn}</div>))} */}
                 <input
                 id="upper"
@@ -185,16 +178,12 @@ function WaterTemp() {
             <button className="button2" onClick={() => sendThresholdData(upperWarningInput, lowerWarningInput, "warning")}>Set Lower</button>
           </div>
           </div>
-            
-            
         <div className="notifications">
-        <p>Notifications: </p>
-        {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
+        <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
         <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
         </div>
-        <div className="graph">
-              <p>Graph:</p>
-              <Chart dataKey="waterTemperature" yAxisLabel="Water Temperature (°C)" />
+          <div className="graph">
+              <p>Graph: GraphComponent/</p>
           </div>
           </div>
     </div>  
@@ -202,15 +191,4 @@ function WaterTemp() {
 }
 
 
-export default WaterTemp;
-
-/*
-<div className="notifications">
-            <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
-              { {data.map((item) => (<div key={item.id}> Upper: {item.upperNotif}, Lower: {item.lowerNotif}</div>))} }
-              <p>
-              Upper:{" "}<button onClick={toggleUpperNotification}>{upperNotificationToggle ? "On" : "Off"}</button>{" "}
-              Lower:{" "}<button onClick={toggleLowerNotification}>{lowerNotificationToggle ? "On" : "Off"}</button>
-            </p>
-          </div>   
-*/
+export default ElectricConduc;
