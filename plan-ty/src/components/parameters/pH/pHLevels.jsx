@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Switch from "../../Switch/Switch";
 import "./../../parameters/Parameters.css";
-import Chart from "./../../charts/Chart";
+import Chart from "../../charts/Chart";
 
-function FlowRate() {
+function PHLevels() {
   const [plant, setPlant] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [upperDangerInput, setUpperDangerInput] = useState("");
@@ -22,7 +22,7 @@ function FlowRate() {
 
   const fetchData = async () => {
     await axios
-      .get("http://localhost:8989/plants/flowRate")
+      .get("http://localhost:8989/plants/ph")
       .then((response) => {
         setPlant(response.data);
       })
@@ -125,14 +125,14 @@ function FlowRate() {
     date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
   return (
-    <div className="everyhing">
+    <div id="pHLevels" className="everyhing">
       <div>
-        <h1>WATER FLOW RATE</h1>
+        <h1>WATER pH LEVELS</h1>
         <div className="container">
           <div className="box1">
             <div className="lastFetched" id="left">
               <p>
-                Last Fetched at: {showTime} - {plant.rate} gallons/square foot
+                Last Fetched at: {showTime} - {plant.rate} acidity/basicity
               </p>
               {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
@@ -273,7 +273,7 @@ function FlowRate() {
           </div>
           <div className="graph">
             <p>Graph:</p>
-            <Chart dataKey="flowRate" yAxisLabel="Flow Rate GPM" />
+            <Chart dataKey="waterpH" yAxisLabel="acidity/bacidity" />
           </div>
         </div>
       </div>
@@ -281,4 +281,4 @@ function FlowRate() {
   );
 }
 
-export default FlowRate;
+export default PHLevels;
