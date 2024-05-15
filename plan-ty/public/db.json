@@ -5,7 +5,8 @@
       "waterTemperature": 22,
       "waterpH": 8.4,
       "electricConductivity": 100,
-      "flowRate": 6
+      "flowRate": 6,
+      "waterLevel":4
     },
     {
       "id": 1,
@@ -13,7 +14,8 @@
       "waterTemperature": 22,
       "waterpH": 8,
       "electricConductivity": 120,
-      "flowRate": 10
+      "flowRate": 10,
+      "waterLevel":6
     },
     {
       "id": 2,
@@ -21,7 +23,8 @@
       "waterTemperature": 24,
       "waterpH": 7.5,
       "electricConductivity": 130,
-      "flowRate": 8
+      "flowRate": 8,
+      "waterLevel":7
     },
     {
       "id": 3,
@@ -29,7 +32,8 @@
       "waterTemperature": 23,
       "waterpH": 8,
       "electricConductivity": 125,
-      "flowRate": 9
+      "flowRate": 9,
+      "waterLevel":6
     },
     {
       "id": 4,
@@ -37,6 +41,7 @@
       "waterTemperature": 21,
       "waterpH": 8.4,
       "electricConductivity": 110,
-      "flowRate": 10
+      "flowRate": 10,
+      "waterLevel":5
     }
   ]
