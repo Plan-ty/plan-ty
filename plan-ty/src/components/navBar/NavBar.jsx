@@ -109,41 +109,11 @@ function Navbar() {
           <li>
             <Nav.Link
               as={Link}
-              to="/airTemperature"
-              onClick={closeMenu}
-              className="navbar--content"
-            >
-              Air Temperature
-            </Nav.Link>
-          </li>
-          <li>
-            <Nav.Link
-              as={Link}
-              to="/airHumidity"
-              onClick={closeMenu}
-              className="navbar--content"
-            >
-              Air Humidity
-            </Nav.Link>
-          </li>
-          <li>
-            <Nav.Link
-              as={Link}
               to="/waterLevel"
               onClick={closeMenu}
               className="navbar--content"
             >
               Water Level
-            </Nav.Link>
-          </li>
-          <li>
-            <Nav.Link
-              as={Link}
-              to="/ec"
-              onClick={closeMenu}
-              className="navbar--content"
-            >
-              EC
             </Nav.Link>
           </li>
           {/* Add additional navigation links here */}
