@@ -10,6 +10,7 @@ import AirHumidity from "./components/parameters/airHumidity/AirHumidity";
 import Home from "./components/home/Home";
 import AirTemp from "./components/parameters/airTemp/AirTemp";
 import WaterLevel from "./components/parameters/waterLevel/WaterLevel";
+import EC from "./components/parameters/ec/EC";
 
 function App() {
   return (
@@ -23,9 +24,10 @@ function App() {
             <Route path="/flowRate" element={<FlowRate />} />
             <Route path="/electricConduc" element={<ElectricConduc />} />
             <Route path="/pH" element={<PHLevels />} />
-            <Route path="/airTemp" element={<AirTemp />} />
+            <Route path="/airTemperature" element={<AirTemp />} />
             <Route path="/waterLevel" element={<WaterLevel />} />
             <Route path="/airHumidity" element={<AirHumidity />} />
+            <Route path="/ec" element={<EC />} />
             <Route path="*" element={<div>404 Not Found</div>}></Route>
           </Routes>
         </div>
