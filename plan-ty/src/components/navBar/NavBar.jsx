@@ -109,6 +109,11 @@ function Navbar() {
           <li>
             <Nav.Link
               as={Link}
+              to="/airTemp"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              Air Temperature
               to="/airHumidity"
               onClick={closeMenu}
               className="navbar--content"
