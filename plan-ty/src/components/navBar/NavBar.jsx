@@ -116,6 +116,16 @@ function Navbar() {
               Air Humidity
             </Nav.Link>
           </li>
+          <li>
+            <Nav.Link
+              as={Link}
+              to="/waterLevel"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              Water Level
+            </Nav.Link>
+          </li>
           {/* Add additional navigation links here */}
         </ul>
       </div>

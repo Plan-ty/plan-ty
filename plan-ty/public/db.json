@@ -6,7 +6,8 @@
       "waterpH": 8.4,
       "electricConductivity": 100,
       "flowRate": 6,
-      "airHumidity": 5
+      "airHumidity": 5,
+      "waterLevel": 5
     },
     {
       "id": 1,
@@ -15,7 +16,8 @@
       "waterpH": 8,
       "electricConductivity": 120,
       "flowRate": 10,
-      "airHumidity": 8
+      "airHumidity": 8,
+      "waterLevel": 6
     },
     {
       "id": 2,
@@ -24,7 +26,8 @@
       "waterpH": 7.5,
       "electricConductivity": 130,
       "flowRate": 8,
-      "airHumidity": 3
+      "airHumidity": 3,
+      "waterLevel": 8
     },
     {
       "id": 3,
@@ -33,7 +36,8 @@
       "waterpH": 8,
       "electricConductivity": 125,
       "flowRate": 9,
-      "airHumidity": 7
+      "airHumidity": 7,
+      "waterLevel": 3
     },
     {
       "id": 4,
@@ -42,6 +46,7 @@
       "waterpH": 8.4,
       "electricConductivity": 110,
       "flowRate": 10,
-      "airHumidity": 4
+      "airHumidity": 4,
+      "waterLevel": 5
     }
   ]
