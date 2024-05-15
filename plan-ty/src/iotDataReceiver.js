@@ -11,7 +11,7 @@ function IotComponent() {
 
   const fetchData = () => {
     axios
-      .get("api-endpoint")
+      .get("http://localhost:3001/data")
       .then((response) => {
         setData(response.data);
       })
@@ -22,7 +22,7 @@ function IotComponent() {
 
   const sendData = () => {
     axios
-      .post("api-endpoint", { data: inputValue })
+      .post("http://localhost:3001/data", inputValue )
       .then((response) => {
         console.log("Data sent successfully:", response.data);
         // After sending the data, fetch updated data to refresh the view
@@ -43,7 +43,7 @@ function IotComponent() {
       <h1>IoT Data</h1>
       <ul>
         {data.map((item) => (
-          <li key={item.id}>{item.name}</li> // Adjust this based on your data structure
+          <li key={item.id}>{item.name}</li>
         ))}
       </ul>
       <input
@@ -58,3 +58,15 @@ function IotComponent() {
 }
 
 export default IotComponent;
+
+/*
+<ul>
+        {data.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+
+For the mocking, install json server: npm install -g json-server
+When you want to run it: powershell -ExecutionPolicy Bypass -Command "json-server --watch db.json --port 3001"
+"http://localhost:3001/data"
+*/

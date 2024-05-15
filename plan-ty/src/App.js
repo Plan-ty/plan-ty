@@ -1,22 +1,29 @@
-
-import './App.css';
+import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import NavBar from "./components/navBar/NavBar";
+import WaterTemp from "./components/parameters/waterTemp/WaterTemp";
+import FlowRate from "./components/parameters/flowRate/FlowRate";
+import ElectricConduc from "./components/parameters/electricConduc/ElectricConduc";
+import PHLevels from "./components/parameters/pH/pHLevels";
+import Home from "./components/home/Home";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <div>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/waterTemp" element={<WaterTemp />} />
+            <Route path="/flowRate" element={<FlowRate />} />
+            <Route path="/electricConduc" element={<ElectricConduc />} />
+            <Route path="/pH" element={<PHLevels />} />
+            <Route path="*" element={<div>404 Not Found</div>}></Route>
+          </Routes>
+        </div>
+      </Router>
     </div>
   );
 }
