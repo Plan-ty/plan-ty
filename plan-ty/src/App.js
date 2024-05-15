@@ -7,6 +7,7 @@ import FlowRate from "./components/parameters/flowRate/FlowRate";
 import ElectricConduc from "./components/parameters/electricConduc/ElectricConduc";
 import PHLevels from "./components/parameters/pH/pHLevels";
 import Home from "./components/home/Home";
+import AirTemp from "./components/parameters/airTemp/AirTemp";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/flowRate" element={<FlowRate />} />
             <Route path="/electricConduc" element={<ElectricConduc />} />
             <Route path="/pH" element={<PHLevels />} />
+            <Route path="/airTemp" element={<AirTemp />} />
             <Route path="*" element={<div>404 Not Found</div>}></Route>
           </Routes>
         </div>

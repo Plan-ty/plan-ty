@@ -106,6 +106,16 @@ function Navbar() {
               Water pH Levels
             </Nav.Link>
           </li>
+          <li>
+            <Nav.Link
+              as={Link}
+              to="/airTemp"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              Air Temperature
+            </Nav.Link>
+          </li>
           {/* Add additional navigation links here */}
         </ul>
       </div>
