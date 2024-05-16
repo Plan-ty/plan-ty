@@ -16,7 +16,7 @@ function App() {
         <div>
           <NavBar />
           <Routes>
-            <Route path="/plan-ty" element={<Home />}></Route>
+            <Route path="/plan-ty/" element={<Home />}></Route>
             <Route path="/plan-ty/waterTemp" element={<WaterTemp />} />
             <Route path="/plan-ty/flowRate" element={<FlowRate />} />
             <Route path="/plan-ty/electricConduc" element={<ElectricConduc />} />
