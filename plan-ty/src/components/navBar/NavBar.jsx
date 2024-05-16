@@ -59,7 +59,7 @@ function Navbar() {
           <li>
             <Nav.Link
               as={Link}
-              to="/"
+              to="/plan-ty/"
               onClick={closeMenu}
               className="navbar--content"
             >
@@ -69,7 +69,7 @@ function Navbar() {
           <li>
             <Nav.Link
               as={Link}
-              to="/waterTemp"
+              to="/plan-ty/waterTemp"
               onClick={closeMenu}
               className="navbar--content"
             >
@@ -79,7 +79,7 @@ function Navbar() {
           <li>
             <Nav.Link
               as={Link}
-              to="/flowRate"
+              to="/plan-ty/flowRate"
               onClick={closeMenu}
               className="navbar--content"
             >
@@ -89,7 +89,7 @@ function Navbar() {
           <li>
             <Nav.Link
               as={Link}
-              to="/electricConduc"
+              to="/plan-ty/electricConduc"
               onClick={closeMenu}
               className="navbar--content"
             >
@@ -99,7 +99,7 @@ function Navbar() {
           <li>
             <Nav.Link
               as={Link}
-              to="/pH"
+              to="/plan-ty/pH"
               onClick={closeMenu}
               className="navbar--content"
             >
@@ -109,7 +109,7 @@ function Navbar() {
           <li>
             <Nav.Link
               as={Link}
-              to="/waterLevel"
+              to="/plan-ty/waterLevel"
               onClick={closeMenu}
               className="navbar--content"
             >

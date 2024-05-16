@@ -16,12 +16,12 @@ function App() {
         <div>
           <NavBar />
           <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/waterTemp" element={<WaterTemp />} />
-            <Route path="/flowRate" element={<FlowRate />} />
-            <Route path="/electricConduc" element={<ElectricConduc />} />
-            <Route path="/pH" element={<PHLevels />} />
-            <Route path="/waterLevel" element={<WaterLevel />} />
+            <Route path="/plan-ty" element={<Home />}></Route>
+            <Route path="/plan-ty/waterTemp" element={<WaterTemp />} />
+            <Route path="/plan-ty/flowRate" element={<FlowRate />} />
+            <Route path="/plan-ty/electricConduc" element={<ElectricConduc />} />
+            <Route path="/plan-ty/pH" element={<PHLevels />} />
+            <Route path="/plan-ty/waterLevel" element={<WaterLevel />} />
             <Route path="*" element={<div>404 Not Found</div>}></Route>
           </Routes>
         </div>
