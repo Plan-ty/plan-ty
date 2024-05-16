@@ -129,6 +129,16 @@ function Navbar() {
           <li>
             <Nav.Link
               as={Link}
+              to="/dewPoint"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              Dew Point
+            </Nav.Link>
+          </li>
+          <li>
+          <Nav.Link
+              as={Link}
               to="/waterLevel"
               onClick={closeMenu}
               className="navbar--content"
