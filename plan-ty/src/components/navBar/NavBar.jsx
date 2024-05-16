@@ -156,6 +156,16 @@ function Navbar() {
               CO2
             </Nav.Link>
           </li>
+          <li>
+            <Nav.Link
+              as={Link}
+              to="/lightLevels"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              Light levels
+            </Nav.Link>
+          </li>
           {/* Add additional navigation links here */}
         </ul>
       </div>
