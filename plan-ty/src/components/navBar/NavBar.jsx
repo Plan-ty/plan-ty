@@ -109,6 +109,16 @@ function Navbar() {
           <li>
             <Nav.Link
               as={Link}
+              to="/airTemperature"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              Air Temperature
+            </Nav.Link>
+          </li>
+          <li>
+            <Nav.Link
+              as={Link}
               to="/airHumidity"
               onClick={closeMenu}
               className="navbar--content"
@@ -124,6 +134,46 @@ function Navbar() {
               className="navbar--content"
             >
               Dew Point
+            </Nav.Link>
+          </li>
+          <li>
+          <Nav.Link
+              as={Link}
+              to="/waterLevel"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              Water Level
+            </Nav.Link>
+          </li>
+          <li>
+            <Nav.Link
+              as={Link}
+              to="/ec"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              EC
+            </Nav.Link>
+          </li>
+          <li>
+            <Nav.Link
+              as={Link}
+              to="/co2"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              CO2
+            </Nav.Link>
+          </li>
+          <li>
+            <Nav.Link
+              as={Link}
+              to="/lightLevels"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              Light levels
             </Nav.Link>
           </li>
           {/* Add additional navigation links here */}
