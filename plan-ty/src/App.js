@@ -7,6 +7,7 @@ import FlowRate from "./components/parameters/flowRate/FlowRate";
 import ElectricConduc from "./components/parameters/electricConduc/ElectricConduc";
 import PHLevels from "./components/parameters/pH/pHLevels";
 import AirHumidity from "./components/parameters/airHumidity/AirHumidity";
+import DewPoint from "./components/parameters/dewPoint/DewPoint";
 import Home from "./components/home/Home";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/electricConduc" element={<ElectricConduc />} />
             <Route path="/pH" element={<PHLevels />} />
             <Route path="/airHumidity" element={<AirHumidity />} />
+            <Route path="/dewPoint" element={<DewPoint />} />
             <Route path="*" element={<div>404 Not Found</div>}></Route>
           </Routes>
         </div>

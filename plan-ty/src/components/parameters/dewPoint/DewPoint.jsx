@@ -4,7 +4,7 @@ import Switch from "../../Switch/Switch";
 import './../../parameters/Parameters.css';
 import Chart from './../../charts/Chart'
 
-function AirHumidity() {
+function DewPoint() {
   const [plant, setPlant] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [upperDangerInput, setUpperDangerInput] = useState("");
@@ -126,12 +126,12 @@ function AirHumidity() {
   return (
     
       <div>
-        <h1>AIR HUMIDITY</h1>
+        <h1>DEW POINT</h1>
         <div className="container">
           <div className="box1">
           <div className="lastFetched" id="left">
             {/* !!!!!Change the plant.waterTemperature to the name of the actual value passed in the json object */}
-          <p>Last Fetched at: {showTime} - {plant.airHumidity} %</p>
+          <p>Last Fetched at: {showTime} - {plant.dewPoint}°C</p>
           {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
                {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
                 <p id="error">Error placeholder</p>
@@ -195,7 +195,7 @@ function AirHumidity() {
         </div>
         <div className="graph">
               <p>Graph:</p>
-              <Chart dataKey="airHumidity" yAxisLabel=" Air Humidity (%)" />
+              <Chart dataKey="dewPoint" yAxisLabel="Dew Point (°C)" />
           </div>
           </div>
     </div>  
@@ -203,4 +203,15 @@ function AirHumidity() {
 }
 
 
-export default AirHumidity;
+export default DewPoint;
+
+/*
+<div className="notifications">
+            <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
+              { {data.map((item) => (<div key={item.id}> Upper: {item.upperNotif}, Lower: {item.lowerNotif}</div>))} }
+              <p>
+              Upper:{" "}<button onClick={toggleUpperNotification}>{upperNotificationToggle ? "On" : "Off"}</button>{" "}
+              Lower:{" "}<button onClick={toggleLowerNotification}>{lowerNotificationToggle ? "On" : "Off"}</button>
+            </p>
+          </div>   
+*/
