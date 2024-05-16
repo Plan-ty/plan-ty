@@ -146,6 +146,16 @@ function Navbar() {
               EC
             </Nav.Link>
           </li>
+          <li>
+            <Nav.Link
+              as={Link}
+              to="/co2"
+              onClick={closeMenu}
+              className="navbar--content"
+            >
+              CO2
+            </Nav.Link>
+          </li>
           {/* Add additional navigation links here */}
         </ul>
       </div>
