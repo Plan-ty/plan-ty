@@ -48,6 +48,7 @@
     font-weight: 400;
     line-height: 24px;
     cursor: pointer;
+    padding-top: 6px;
   }
   .navbar--active-content {
     color: var(--primary);
@@ -59,6 +60,8 @@
     font-size: 25px; /* Adjust font size as needed */
     font-family:Arial, Helvetica, sans-serif;
     color: #f1f7f6;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   
   .letter {

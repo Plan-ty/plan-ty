@@ -127,7 +127,7 @@ function PHLevels() {
   return (
     <div id="pHLevels" className="everyhing">
       <div>
-        <h1>WATER pH LEVELS</h1>
+        <h1>WATER pH LEVEL</h1>
         <div className="container">
           <div className="box1">
             <div className="lastFetched" id="left">
