@@ -46,7 +46,7 @@ function Navbar() {
         <span className="letter">Y</span>
       </div>
 
-      <div
+      <div data-cy="menu"
         className={`nav__hamburger ${navActive ? "active" : ""}`}
         onClick={toggleNav}
       >
@@ -66,7 +66,7 @@ function Navbar() {
               Home
             </Nav.Link>
           </li>
-          <li>
+          <li data-cy="temp">
             <Nav.Link
               as={Link}
               to="/waterTemp"
@@ -76,7 +76,7 @@ function Navbar() {
               Water Temperature
             </Nav.Link>
           </li>
-          <li>
+          <li data-cy="flow">
             <Nav.Link
               as={Link}
               to="/flowRate"
@@ -86,7 +86,7 @@ function Navbar() {
               Water Flow Rate
             </Nav.Link>
           </li>
-          <li>
+          <li data-cy="ec">
             <Nav.Link
               as={Link}
               to="/electricConduc"
@@ -96,7 +96,7 @@ function Navbar() {
               Electric Conductivity
             </Nav.Link>
           </li>
-          <li>
+          <li data-cy="ph">
             <Nav.Link
               as={Link}
               to="/pH"

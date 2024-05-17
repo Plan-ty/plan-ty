@@ -159,6 +159,7 @@ function WaterTemp() {
                 placeholder="Enter Upper Level"/>
             <button className="button1" onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput,"danger")}>Set Upper</button>
                 <input
+                data-cy="submit"
                 id="lower"
                 type="text"
                 value={lowerDangerInput}
@@ -191,7 +192,7 @@ function WaterTemp() {
         <div className="notifications">
         <p>Notifications: </p>
         {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
-        <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
+        <p data-cy="switch1">Upper: <Switch  isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
         </div>
         <div className="graph">
               <p>Graph:</p>
