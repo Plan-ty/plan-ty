@@ -46,7 +46,7 @@ function DropDown() {
           <Dropdown.Item as={Link} to="/lightLevels">
             Light Levels
           </Dropdown.Item>
-          <Dropdown.Item as={Link} to="/vpd">
+          <Dropdown.Item as={Link} to="/VPressureDeficit">
             Vapor Pressure Deficit
           </Dropdown.Item>
         </Dropdown.Menu>
