@@ -9,7 +9,8 @@
       "airTemperature": 18,
       "airHumidity": 5,
       "waterLevel": 5,
-      "EC": 790
+      "EC": 790,
+      "vaporPressureDeficit":0.55
     },
     {
       "id": 1,
@@ -21,7 +22,8 @@
       "airTemperature": 20,
       "airHumidity": 8,
       "waterLevel": 6,
-      "EC": 850
+      "EC": 850,
+      "vaporPressureDeficit":0.63
     },
     {
       "id": 2,
@@ -33,7 +35,8 @@
       "airTemperature": 21,
       "airHumidity": 3,
       "waterLevel": 8,
-      "EC": 930
+      "EC": 930,
+      "vaporPressureDeficit":0.52
     },
     {
       "id": 3,
@@ -45,7 +48,8 @@
       "airTemperature": 24,
       "airHumidity": 7,
       "waterLevel": 3,
-      "EC": 1000
+      "EC": 1000,
+      "vaporPressureDeficit":0.50
     },
     {
       "id": 4,
@@ -57,6 +61,7 @@
       "airTemperature": 20,
       "airHumidity": 4,
       "waterLevel": 5,
-      "EC": 1100
+      "EC": 1100,
+      "vaporPressureDeficit":0.55
     }
   ]
