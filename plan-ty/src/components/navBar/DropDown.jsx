@@ -2,17 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import Dropdown from "react-bootstrap/Dropdown";
+import "./DropDown.css";
 
 function DropDown() {
   return (
     <div style={{}}>
       <Dropdown>
-        <Dropdown.Toggle
-          style={{ backgroundColor: "#96C5C0", border: "none", color: "black" }}
-        >
+        <Dropdown.Toggle className="dropdown-toggle-custom">
           Parameters
         </Dropdown.Toggle>
-        <Dropdown.Menu>
+        <Dropdown.Menu style={{ backgroundColor: "#87b1ad" }}>
           <Dropdown.Item as={Link} to="/waterTemp" data-cy="temp">
             Water Temperature
           </Dropdown.Item>
