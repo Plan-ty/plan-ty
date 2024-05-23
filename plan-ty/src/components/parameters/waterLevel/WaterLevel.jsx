@@ -3,30 +3,44 @@ import axios from "axios";
 import Switch from "../../Switch/Switch";
 import "./../../parameters/Parameters.css";
 import Chart from "./../../charts/Chart";
+import WarningThresholds from "../../inputs/WarningThresholds";
 
 function WaterLevel() {
-  const [data, setData] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-  const [upperDangerInput, setUpperDangerInput] = useState("");
-  const [lowerDangerInput, setLowerDangerInput] = useState("");
-  const [upperWarningInput, setUpperWarningInput] = useState("");
-  const [lowerWarningInput, setLowerWarningInput] = useState("");
+  const [plant, setPlant] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const [upperDangerInput, setUpperDangerInput] = useState('');
+  const [lowerDangerInput, setLowerDangerInput] = useState('');
+  const [upperWarningInput, setUpperWarningInput] = useState('');
+  const [lowerWarningInput, setLowerWarningInput] = useState('');
   const [upperNotificationToggle, setUpperNotificationToggle] = useState(false);
   const [lowerNotificationToggle, setLowerNotificationToggle] = useState(false);
+  const [isToggled, setIsToggledUpper] = useState(false);
+  const [isToggledLower, setIsToggledLower] = useState(false);
+  const [thresholds, setThresholds] = useState({
+    upperWarning: null,
+    lowerWarning: null,
+    upperDanger: null,
+    lowerDanger: null,
+  });
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const fetchData = () => {
-    axios
-      .get("http://localhost:3001/data")
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5021/Plants/thresholds");
+      const data = response.data.thresholds.find(item => item.type === 'waterLevel');
+      setPlant(response.data);
+      setThresholds({
+        upperWarning: data.warningMax,
+        lowerWarning: data.warningMin,
+        upperDanger: data.max,
+        lowerDanger: data.min,
       });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   const sendData = () => {
@@ -43,28 +57,31 @@ function WaterLevel() {
       });
   };
 
-  const sendThresholdData = (upperValue, lowerValue, thresholdType) => {
+  const sendThresholdData = (upperThreshold, lowerThreshold, thresholdType) => {
+    const data = {
+      type: "waterLevel",
+      warningMax: thresholds.upperWarning,
+      warningMin: thresholds.lowerWarning,
+      max: thresholds.upperDanger,
+      min: thresholds.lowerDanger,
+    };
+  
+    if (thresholdType === 'warning') {
+      if (upperThreshold !== undefined) data.warningMax = upperThreshold;
+      if (lowerThreshold !== undefined) data.warningMin = lowerThreshold;
+    } else if (thresholdType === 'danger') {
+      if (upperThreshold !== undefined) data.max = upperThreshold;
+      if (lowerThreshold !== undefined) data.min = lowerThreshold;
+    }
+  
     axios
-      .post("http://localhost:3001/data", {
-        upperValue,
-        lowerValue,
-        thresholdType,
-      })
+      .patch("http://localhost:5021/Plants/thresholds", data)
       .then((response) => {
-        console.log("Thresholds sent successfully:", response.data);
-        // After sending the data, fetch updated data to refresh the view
-        fetchData();
-        // Clear input fields based on threshold type
-        if (thresholdType === "danger") {
-          setUpperDangerInput("");
-          setLowerDangerInput("");
-        } else if (thresholdType === "warning") {
-          setUpperWarningInput("");
-          setLowerWarningInput("");
-        }
+        console.log("Threshold sent successfully:", response.data);
+        fetchData(); // Refresh data
       })
       .catch((error) => {
-        console.error("Error sending thresholds:", error);
+        console.error("Error sending threshold:", error);
       });
   };
 
@@ -115,9 +132,6 @@ function WaterLevel() {
     //indirectly used here as a callback function for handling input changes, thats why its giving a warning
   };
 
-  const [isToggled, setIsToggledUpper] = useState(false);
-  const [isToggledLower, setIsToggledLower] = useState(false);
-
   //TODO: do it as a component so that it can always be displayed on each page
   const date = new Date();
   const showTime =
@@ -127,43 +141,31 @@ function WaterLevel() {
     <div>
       <h1>WATER LEVEL</h1>
       <div className="container">
-        <div className="box1">
+          <div className="box1">
           <div className="lastFetched" id="left">
-            <p>
-              Last Fetched at: {showTime} -{" "}
-              {data.map((item) => (
-                <div key={item.id}>{item.name}</div>
-              ))}{" "}
-            </p>
-            {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
-            <p id="error">Error placeholder</p>
+            {/* !!!!!Change the plant.waterTemperature to the name of the actual value passed in the json object */}
+          <p>Last Fetched at: {showTime} - {plant.waterLevel} ml/cm</p>
+          {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
+               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
+                <p id="error">Error placeholder</p>
           </div>
           <div className="sendData" id="right">
-            <input
-              id="sendData"
-              type="text"
-              value={inputValue}
-              onChange={(event) => setInputValue(event.target.value)}
-              placeholder="Enter your data"
-            />
-            <button className="button" onClick={sendData}>
-              Send Data
-            </button>
+          <input
+                id="sendData"
+                type="text"
+                value={inputValue}
+                onChange={(event) => setInputValue(event.target.value)}
+                placeholder="Enter your data"/>
+            <button className="button" onClick={sendData}>Send Data</button>
           </div>
-        </div>
+          </div>
         <div className="box2">
           <div className="dangerThresholds" id="left">
             <p>
-              Danger Levels:{" "}
-              {data.map((item) => (
-                <div key={item.id}>
-                  {" "}
-                  Upper: {item.name}, Lower: {item.name}
-                </div>
-              ))}
-            </p>
-            {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperThresh}, Lower: {item.lowerThresh}</div>))} */}
-            <input
+              Danger Levels:</p>
+              {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
+              {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperThresh}, Lower: {item.lowerThresh}</div>))} */}
+              <input
               id="upper"
               type="text"
               value={upperDangerInput}
@@ -194,83 +196,24 @@ function WaterLevel() {
               Set Lower
             </button>
           </div>
-          <div className="warningThresholds" id="right">
-            <p>
-              Warning Levels:{" "}
-              {data.map((item) => (
-                <div key={item.id}>
-                  {" "}
-                  Upper: {item.name}, Lower: {item.name}
-                </div>
-              ))}
-            </p>
-            {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperWarn}, Lower: {item.lowerWarn}</div>))} */}
-            <input
-              id="upper"
-              type="text"
-              value={upperWarningInput}
-              onChange={(event) => setUpperWarningInput(event.target.value)}
-              placeholder="Enter Upper Level"
-            />
-            <button
-              className="button1"
-              onClick={() =>
-                sendThresholdData(
-                  upperWarningInput,
-                  lowerWarningInput,
-                  "warning"
-                )
-              }
-            >
-              Set Upper
-            </button>
-            <input
-              id="lower"
-              type="text"
-              value={lowerWarningInput}
-              onChange={(event) => setLowerWarningInput(event.target.value)}
-              placeholder="Enter Lower Level"
-            />
-            <button
-              className="button2"
-              onClick={() =>
-                sendThresholdData(
-                  upperWarningInput,
-                  lowerWarningInput,
-                  "warning"
-                )
-              }
-            >
-              Set Lower
-            </button>
-          </div>
+          <WarningThresholds
+            upperWarningInput={upperWarningInput}
+            setUpperWarningInput={setUpperWarningInput}
+            lowerWarningInput={lowerWarningInput}
+            setLowerWarningInput={setLowerWarningInput}
+            sendThresholdData={sendThresholdData}
+            upperWarningThreshold={thresholds.upperWarning}
+            lowerWarningThreshold={thresholds.lowerWarning}
+          />
         </div>
         <div className="notifications">
-          <p>
-            Notifications:{" "}
-            {data.map((item) => (
-              <div key={item.id}>
-                {" "}
-                Upper: {item.name}, Lower: {item.name}
-              </div>
-            ))}
-          </p>
-          <p>
-            Upper:{" "}
-            <Switch
-              isToggledUpper={isToggled}
-              onToggle={() => setIsToggledUpper(!isToggled)}
-            />{" "}
-            Lower:{" "}
-            <Switch
-              isToggled={isToggledLower}
-              onToggle={() => setIsToggledLower(!isToggledLower)}
-            />
-          </p>
+        <p>Notifications: </p>
+        {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
+        <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
         </div>
         <div className="graph">
           <p>Graph:</p>
-          <Chart dataKey="waterLevel" yAxisLabel="WL ml/cm" />
+          <Chart dataKey="waterLevel" yAxisLabel="Water Level (ml/cm)" />
         </div>
       </div>
     </div>
