@@ -149,16 +149,6 @@ function Navbar() {
           <li>
             <Nav.Link
               as={Link}
-              to="/ec"
-              onClick={closeMenu}
-              className="navbar--content"
-            >
-              EC
-            </Nav.Link>
-          </li>
-          <li>
-            <Nav.Link
-              as={Link}
               to="/co2"
               onClick={closeMenu}
               className="navbar--content"

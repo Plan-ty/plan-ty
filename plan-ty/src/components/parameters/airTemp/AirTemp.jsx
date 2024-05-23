@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios, { AxiosError } from "axios";
 import Switch from "../../Switch/Switch";
 import './../../parameters/Parameters.css';
-import Chart from './../../charts/Chart'
+import Chart from './../../charts/Chart';
+import WarningThresholds from "../../inputs/WarningThresholds";
 
 function AirTemp() {
   const [plant, setPlant] = useState([]);
@@ -15,21 +16,30 @@ function AirTemp() {
   const [lowerNotificationToggle, setLowerNotificationToggle] = useState(false);
   const [isToggled, setIsToggledUpper] = useState(false);
   const [isToggledLower, setIsToggledLower] = useState(false);
-
+  const [thresholds, setThresholds] = useState({
+    upperWarning: null,
+    lowerWarning: null,
+    upperDanger: null,
+    lowerDanger: null,
+  });
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    await axios
-    //!!!!!change the link here for connecting to actual backend
-      .get("http://localhost:8989/plants")
-      .then((response) => {
-        setPlant(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
+    try {
+      const response = await axios.get("http://localhost:5021/Plants/thresholds");
+      const data = response.data.thresholds.find(item => item.type === 'airTemperature');
+      setPlant(response.data);
+      setThresholds({
+        upperWarning: data.warningMax,
+        lowerWarning: data.warningMin,
+        upperDanger: data.max,
+        lowerDanger: data.min,
       });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   if (!plant) return null;
@@ -49,28 +59,31 @@ function AirTemp() {
       });
   };
 
-  const sendThresholdData = (upperValue, lowerValue, thresholdType) => {
+  const sendThresholdData = (upperThreshold, lowerThreshold, thresholdType) => {
+    const data = {
+      type: "airTemperature",
+      warningMax: thresholds.upperWarning,
+      warningMin: thresholds.lowerWarning,
+      max: thresholds.upperDanger,
+      min: thresholds.lowerDanger,
+    };
+  
+    if (thresholdType === 'warning') {
+      if (upperThreshold !== undefined) data.warningMax = upperThreshold;
+      if (lowerThreshold !== undefined) data.warningMin = lowerThreshold;
+    } else if (thresholdType === 'danger') {
+      if (upperThreshold !== undefined) data.max = upperThreshold;
+      if (lowerThreshold !== undefined) data.min = lowerThreshold;
+    }
+  
     axios
-      .post("http://192.168.156.250:5021/Plants/1/temperature", {
-        upperValue,
-        lowerValue,
-        thresholdType,
-      })
+      .patch("http://localhost:5021/Plants/thresholds", data)
       .then((response) => {
-        console.log("Thresholds sent successfully:", response.data);
-        // After sending the data, fetch updated data to refresh the view
-        fetchData();
-        // Clear input fields based on threshold type
-        if (thresholdType === "danger") {
-          setUpperDangerInput("");
-          setLowerDangerInput("");
-        } else if (thresholdType === "warning") {
-          setUpperWarningInput("");
-          setLowerWarningInput("");
-        }
+        console.log("Threshold sent successfully:", response.data);
+        fetchData(); // Refresh data
       })
       .catch((error) => {
-        console.error("Error sending thresholds:", error);
+        console.error("Error sending threshold:", error);
       });
   };
 
@@ -126,7 +139,7 @@ function AirTemp() {
   return (
     
       <div>
-        <h1>WATER TEMPERATURE</h1>
+        <h1>AIR TEMPERATURE</h1>
         <div className="container">
           <div className="box1">
           <div className="lastFetched" id="left">
@@ -166,25 +179,15 @@ function AirTemp() {
                 placeholder="Enter Lower Level"/>
             <button className="button2" onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput, "danger")}>Set Lower</button>          
             </div>
-          <div className="warningThresholds" id="right">
-          <p>Warning Levels: </p>
-          {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
-                {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperWarn}, Lower: {item.lowerWarn}</div>))} */}
-                <input
-                id="upper"
-                type="text"
-                value={upperWarningInput}
-                onChange={(event) => setUpperWarningInput(event.target.value)}
-                placeholder="Enter Upper Level"/>
-            <button className="button1" onClick={() => sendThresholdData(upperWarningInput, lowerWarningInput, "warning")}>Set Upper</button>
-            <input
-                id="lower"
-                type="text"
-                value={lowerWarningInput}
-                onChange={(event) => setLowerWarningInput(event.target.value)}
-                placeholder="Enter Lower Level"/>
-            <button className="button2" onClick={() => sendThresholdData(upperWarningInput, lowerWarningInput, "warning")}>Set Lower</button>
-          </div>
+            <WarningThresholds
+            upperWarningInput={upperWarningInput}
+            setUpperWarningInput={setUpperWarningInput}
+            lowerWarningInput={lowerWarningInput}
+            setLowerWarningInput={setLowerWarningInput}
+            sendThresholdData={sendThresholdData}
+            upperWarningThreshold={thresholds.upperWarning}
+            lowerWarningThreshold={thresholds.lowerWarning}
+          />
           </div>
             
             
