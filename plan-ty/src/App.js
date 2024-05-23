@@ -13,6 +13,7 @@ import AirTemp from "./components/parameters/airTemp/AirTemp";
 import WaterLevel from "./components/parameters/waterLevel/WaterLevel";
 import CO2 from "./components/parameters/co2/CO2";
 import LightLevels from "./components/parameters/lightLevels/LightLevels";
+import VPressureDeficit from "./components/parameters/VPressureDeficit/VPressureDeficit";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/dewPoint" element={<DewPoint />} />
             <Route path="/co2" element={<CO2 />} />
             <Route path="/lightLevels" element={<LightLevels />} />
+            <Route path="/VPressureDeficit" element={<VPressureDeficit />} />
             <Route path="*" element={<div>404 Not Found</div>}></Route>
           </Routes>
         </div>
