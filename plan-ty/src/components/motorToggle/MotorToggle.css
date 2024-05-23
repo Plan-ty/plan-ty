@@ -1,0 +1,31 @@
+.motor-toggle {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  .motor-toggle button {
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .motor-toggle button.on {
+    background-color: #6fc797;
+    color: white;
+  }
+  .motor-toggle button.on:hover{
+    background-color: #57a87a;
+    
+  }
+  
+  .motor-toggle button.off {
+    background-color: #d7a8a5;
+    color: white;
+  }
+  .motor-toggle button.off:hover{
+    background-color: #c49a97;
+    
+  }
+  
