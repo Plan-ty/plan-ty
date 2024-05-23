@@ -6,13 +6,13 @@ import Chart from './../../charts/Chart';
 import WarningThresholds from "../../inputs/WarningThresholds";
 import DangerThresholds from "../../inputs/DangerThresholds";
 
-function WaterTemp() {
+function DewPoint() {
   const [plant, setPlant] = useState([]);
-  const [inputValue, setInputValue] = useState('');
-  const [upperDangerInput, setUpperDangerInput] = useState('');
-  const [lowerDangerInput, setLowerDangerInput] = useState('');
-  const [upperWarningInput, setUpperWarningInput] = useState('');
-  const [lowerWarningInput, setLowerWarningInput] = useState('');
+  const [inputValue, setInputValue] = useState("");
+  const [upperDangerInput, setUpperDangerInput] = useState("");
+  const [lowerDangerInput, setLowerDangerInput] = useState("");
+  const [upperWarningInput, setUpperWarningInput] = useState("");
+  const [lowerWarningInput, setLowerWarningInput] = useState("");
   const [upperNotificationToggle, setUpperNotificationToggle] = useState(false);
   const [lowerNotificationToggle, setLowerNotificationToggle] = useState(false);
   const [isToggled, setIsToggledUpper] = useState(false);
@@ -23,7 +23,6 @@ function WaterTemp() {
     upperDanger: null,
     lowerDanger: null,
   });
-  
   useEffect(() => {
     fetchData();
   }, []);
@@ -31,7 +30,7 @@ function WaterTemp() {
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:5021/Plants/thresholds");
-      const data = response.data.thresholds.find(item => item.type === 'waterTemperature');
+      const data = response.data.thresholds.find(item => item.type === 'dewPoint');
       setPlant(response.data);
       setThresholds({
         upperWarning: data.warningMax,
@@ -43,12 +42,13 @@ function WaterTemp() {
       console.error("Error fetching data:", error);
     }
   };
+
   if (!plant) return null;
 
 
   const sendData = () => {
     axios
-      .post("http://localhost:5021/Plants/thresholds", inputValue )
+      .post("http://192.168.156.250:5021/Plants/1/temperature", inputValue )
       .then((response) => {
         console.log("Data sent successfully:", response.data);
         // After sending the data, fetch updated data to refresh the view
@@ -62,7 +62,7 @@ function WaterTemp() {
 
   const sendThresholdData = (upperThreshold, lowerThreshold, thresholdType) => {
     const data = {
-      type: "waterTemperature",
+      type: "dewPoint",
       warningMax: thresholds.upperWarning,
       warningMin: thresholds.lowerWarning,
       max: thresholds.upperDanger,
@@ -87,8 +87,6 @@ function WaterTemp() {
         console.error("Error sending threshold:", error);
       });
   };
-  
-  
 
   const toggleUpperNotification = () => {
     const newUpperNotificationToggle = !upperNotificationToggle;
@@ -138,17 +136,16 @@ function WaterTemp() {
         + ':' + date.getMinutes() 
         + ":" + date.getSeconds();
 
-       // console.log(plant.waterTemperature)
-
+       // console.log(data.waterTemperature)
   return (
     
       <div>
-        <h1>WATER TEMPERATURE</h1>
+        <h1>DEW POINT</h1>
         <div className="container">
           <div className="box1">
           <div className="lastFetched" id="left">
             {/* !!!!!Change the plant.waterTemperature to the name of the actual value passed in the json object */}
-          <p>Last Fetched at: {showTime} - {plant.waterTemperature}°C</p>
+          <p>Last Fetched at: {showTime} - {plant.dewPoint} °C</p>
           {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
                {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
                 <p id="error">Error placeholder</p>
@@ -173,7 +170,7 @@ function WaterTemp() {
             upperDangerThreshold={thresholds.upperDanger}
             lowerDangerThreshold={thresholds.lowerDanger}
           />
-          <WarningThresholds
+            <WarningThresholds
             upperWarningInput={upperWarningInput}
             setUpperWarningInput={setUpperWarningInput}
             lowerWarningInput={lowerWarningInput}
@@ -192,7 +189,7 @@ function WaterTemp() {
         </div>
         <div className="graph">
               <p>Graph:</p>
-              <Chart dataKey="waterTemperature" yAxisLabel="Water Temperature (°C)" />
+              <Chart dataKey="dewPoint" yAxisLabel="Dew Point (°C)" />
           </div>
           </div>
     </div>  
@@ -200,15 +197,4 @@ function WaterTemp() {
 }
 
 
-export default WaterTemp;
-
-/*
-<div className="notifications">
-            <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
-              { {data.map((item) => (<div key={item.id}> Upper: {item.upperNotif}, Lower: {item.lowerNotif}</div>))} }
-              <p>
-              Upper:{" "}<button onClick={toggleUpperNotification}>{upperNotificationToggle ? "On" : "Off"}</button>{" "}
-              Lower:{" "}<button onClick={toggleLowerNotification}>{lowerNotificationToggle ? "On" : "Off"}</button>
-            </p>
-          </div>   
-*/
+export default DewPoint;

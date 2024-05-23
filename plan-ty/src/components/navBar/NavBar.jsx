@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav"; // Import Nav from react-bootstrap
+import DropDown from "./DropDown";
 import "./NavBar.css";
 
 function Navbar() {
@@ -47,6 +48,7 @@ function Navbar() {
       </div>
 
       <div
+        data-cy="menu"
         className={`nav__hamburger ${navActive ? "active" : ""}`}
         onClick={toggleNav}
       >
@@ -66,57 +68,7 @@ function Navbar() {
               Home
             </Nav.Link>
           </li>
-          <li>
-            <Nav.Link
-              as={Link}
-              to="/waterTemp"
-              onClick={closeMenu}
-              className="navbar--content"
-            >
-              Water Temperature
-            </Nav.Link>
-          </li>
-          <li>
-            <Nav.Link
-              as={Link}
-              to="/flowRate"
-              onClick={closeMenu}
-              className="navbar--content"
-            >
-              Water Flow Rate
-            </Nav.Link>
-          </li>
-          <li>
-            <Nav.Link
-              as={Link}
-              to="/electricConduc"
-              onClick={closeMenu}
-              className="navbar--content"
-            >
-              Electric Conductivity
-            </Nav.Link>
-          </li>
-          <li>
-            <Nav.Link
-              as={Link}
-              to="/pH"
-              onClick={closeMenu}
-              className="navbar--content"
-            >
-              Water pH Levels
-            </Nav.Link>
-          </li>
-          <li>
-            <Nav.Link
-              as={Link}
-              to="/waterLevel"
-              onClick={closeMenu}
-              className="navbar--content"
-            >
-              Water Level
-            </Nav.Link>
-          </li>
-          {/* Add additional navigation links here */}
+          <DropDown />
         </ul>
       </div>
     </nav>

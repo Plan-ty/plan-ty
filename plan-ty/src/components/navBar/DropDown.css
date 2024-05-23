@@ -1,0 +1,31 @@
+
+  /*DropDown css*/
+  .dropdown-toggle-custom {
+    background-color: #96c5c0;
+    border: none;
+    color: black;
+    
+  }
+
+  .dropdown-toggle-custom:hover, 
+   .dropdown-toggle-custom:focus,
+  .dropdown-toggle-custom:active,
+  .dropdown-toggle-custom:focus:active,
+  .dropdown-toggle-custom.show,
+  .dropdown-toggle-custom.show:focus,
+  .dropdown-toggle-custom.show:active {
+    background-color: #96C5C0 !important;
+    border: none !important;
+    color: black !important;
+    
+  }
+  
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus,
+.dropdown-menu .dropdown-item:active {
+  background-color: #96C5C0 !important; /* Set to match the menu background */
+  color: black !important; /* Maintain text color */
+  text-decoration: none !important; /* Remove underline if present */
+  
+}
+/*DropDown css ends*/

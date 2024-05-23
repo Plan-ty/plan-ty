@@ -1,47 +1,77 @@
 [
-    {
-      "id": 0,
-      "time": 9,
-      "waterTemperature": 22,
-      "waterpH": 8.4,
-      "electricConductivity": 100,
-      "flowRate": 6,
-      "waterLevel":4
-    },
-    {
-      "id": 1,
-      "time": 10,
-      "waterTemperature": 22,
-      "waterpH": 8,
-      "electricConductivity": 120,
-      "flowRate": 10,
-      "waterLevel":6
-    },
-    {
-      "id": 2,
-      "time": 11,
-      "waterTemperature": 24,
-      "waterpH": 7.5,
-      "electricConductivity": 130,
-      "flowRate": 8,
-      "waterLevel":7
-    },
-    {
-      "id": 3,
-      "time": 12,
-      "waterTemperature": 23,
-      "waterpH": 8,
-      "electricConductivity": 125,
-      "flowRate": 9,
-      "waterLevel":6
-    },
-    {
-      "id": 4,
-      "time": 13,
-      "waterTemperature": 21,
-      "waterpH": 8.4,
-      "electricConductivity": 110,
-      "flowRate": 10,
-      "waterLevel":5
-    }
-  ]
+      {
+        "id": 0,
+        "time": 9,
+        "waterTemperature": 22,
+        "waterpH": 8.4,
+        "electricConductivity": 100,
+        "flowRate": 6,
+        "waterLevel": 5,
+        "airTemperature": 18,
+        "airHumidity": 5,
+        "co2": 10,
+        "vpd": 10,
+        "dewPoint": 10,
+        "lightLevels": 10
+      },
+      {
+        "id": 1,
+        "time": 10,
+        "waterTemperature": 22,
+        "waterpH": 8,
+        "electricConductivity": 120,
+        "flowRate": 10,
+        "waterLevel": 6,
+        "airTemperature": 20,
+        "airHumidity": 8,
+        "co2": 11,
+        "vpd": 12,
+        "dewPoint": 13,
+        "lightLevels": 14
+      },
+      {
+        "id": 2,
+        "time": 11,
+        "waterTemperature": 24,
+        "waterpH": 7.5,
+        "electricConductivity": 130,
+        "flowRate": 8,
+        "waterLevel": 8,
+        "airTemperature": 21,
+        "airHumidity": 3,
+        "co2": 15,
+        "vpd": 14,
+        "dewPoint": 13,
+        "lightLevels": 12
+      },
+      {
+        "id": 3,
+        "time": 12,
+        "waterTemperature": 23,
+        "waterpH": 8,
+        "electricConductivity": 125,
+        "flowRate": 9,
+        "waterLevel": 3,
+        "airTemperature": 24,
+        "airHumidity": 7,
+        "co2": 11,
+        "vpd": 10,
+        "dewPoint": 11,
+        "lightLevels": 12
+      },
+      {
+        "id": 4,
+        "time": 13,
+        "waterTemperature": 21,
+        "waterpH": 8.4,
+        "electricConductivity": 110,
+        "flowRate": 10,
+        "waterLevel": 5,
+        "airTemperature": 20,
+        "airHumidity": 4,
+        "co2": 13,
+        "vpd": 14,
+        "dewPoint": 15,
+        "lightLevels": 14
+      }
+    ]
