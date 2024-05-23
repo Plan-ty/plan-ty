@@ -36,9 +36,6 @@ function DropDown() {
           <Dropdown.Item as={Link} to="/dewPoint">
             Dew Point
           </Dropdown.Item>
-          <Dropdown.Item as={Link} to="/ec">
-            EC
-          </Dropdown.Item>
           <Dropdown.Item as={Link} to="/co2">
             CO2
           </Dropdown.Item>

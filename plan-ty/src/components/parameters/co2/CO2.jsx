@@ -4,6 +4,7 @@ import Switch from "../../Switch/Switch";
 import './../../parameters/Parameters.css';
 import Chart from './../../charts/Chart';
 import WarningThresholds from "../../inputs/WarningThresholds";
+import DangerThresholds from "../../inputs/DangerThresholds";
 
 function CO2() {
   const [plant, setPlant] = useState([]);
@@ -160,25 +161,15 @@ function CO2() {
           </div>
           </div>
           <div className="box2">
-          <div className="dangerThresholds" id="left">
-          <p>Danger Levels: </p>
-          {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
-                {/* {data.map((item) => (<div key={item.id}> Upper: {item.upperThresh}, Lower: {item.lowerThresh}</div>))} */}
-                <input
-                id="upper"
-                type="text"
-                value={upperDangerInput}
-                onChange={(event) => setUpperDangerInput(event.target.value)}
-                placeholder="Enter Upper Level"/>
-            <button className="button1" onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput,"danger")}>Set Upper</button>
-                <input
-                id="lower"
-                type="text"
-                value={lowerDangerInput}
-                onChange={(event) => setLowerDangerInput(event.target.value)}
-                placeholder="Enter Lower Level"/>
-            <button className="button2" onClick={() => sendThresholdData(upperDangerInput,lowerDangerInput, "danger")}>Set Lower</button>          
-            </div>
+          <DangerThresholds
+            upperDangerInput={upperDangerInput}
+            setUpperDangerInput={setUpperDangerInput}
+            lowerDangerInput={lowerDangerInput}
+            setLowerDangerInput={setLowerDangerInput}
+            sendThresholdData={sendThresholdData}
+            upperDangerThreshold={thresholds.upperDanger}
+            lowerDangerThreshold={thresholds.lowerDanger}
+          />
             <WarningThresholds
             upperWarningInput={upperWarningInput}
             setUpperWarningInput={setUpperWarningInput}
@@ -198,7 +189,7 @@ function CO2() {
         </div>
         <div className="graph">
               <p>Graph:</p>
-              <Chart dataKey="co2" yAxisLabel="Air CO2 %" />
+              <Chart dataKey="co2" yAxisLabel="Air CO2 (%)" />
           </div>
           </div>
     </div>  
