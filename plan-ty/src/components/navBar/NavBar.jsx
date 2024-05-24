@@ -1,25 +1,31 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Nav from "react-bootstrap/Nav"; // Import Nav from react-bootstrap
 import DropDown from "./DropDown";
 import "./NavBar.css";
 
-function Navbar() {
+function Navbar({ setToken }) {
   const [navActive, setNavActive] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track user's login status
+  const navigate = useNavigate();
 
-  // hamburger nav bar active
+  // Function to handle logout
+  const handleLogout = () => {
+    sessionStorage.removeItem("jwt");
+    setToken(null);
+    navigate("/login");
+  };
+
+  // Toggle hamburger menu
   const toggleNav = () => {
     setNavActive(!navActive);
   };
 
-  const closeMenu = () => {
-    setNavActive(false);
-  };
-
+  // Close hamburger menu on window resize
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 500) {
-        closeMenu(); //call close menu function
+        setNavActive(false);
       }
     };
     window.addEventListener("resize", handleResize);
@@ -29,11 +35,23 @@ function Navbar() {
     };
   }, []);
 
+  // Close hamburger menu if window size is small
   useEffect(() => {
     if (window.innerWidth <= 1200) {
-      closeMenu();
+      setNavActive(false);
     }
   }, []);
+
+  // Check authentication status on component mount
+  useEffect(() => {
+    const token = sessionStorage.getItem("jwt");
+    setIsLoggedIn(!!token); // Update isLoggedIn based on token presence
+  }, [setIsLoggedIn]);
+
+  // Function to close the menu when a navbar item is clicked
+  const closeMenu = () => {
+    setNavActive(false);
+  };
 
   return (
     <nav className={`navbar ${navActive ? "active" : ""}`}>
@@ -62,13 +80,20 @@ function Navbar() {
             <Nav.Link
               as={Link}
               to="/"
-              onClick={closeMenu}
+              onClick={() => {
+                setNavActive(false);
+              }}
               className="navbar--content"
             >
               Home
             </Nav.Link>
           </li>
           <DropDown />
+          {isLoggedIn && ( // Render logout button only if user is logged in
+            <li>
+              <button onClick={handleLogout} className="logout-button">Logout</button>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

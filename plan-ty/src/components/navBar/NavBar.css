@@ -148,4 +148,35 @@
     border-radius: 10px; /* Adjust the value as needed for the desired roundness */
 }
 
+.logout-button {
+    background-color: var(--logout-bg);
+    color: var(--logout-color);
+    border: none;
+    border-radius: 10px; /* Add rounded corners */
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: var(--logout-hover-bg);
+}
+
+.login-button {
+    background-color: var(--logout-bg);
+    color: var(--logout-color);
+    border: none;
+    border-radius: 10px; /* Add rounded corners */
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: var(--logout-hover-bg);
+}
 /* Navbar Styler Ends */
