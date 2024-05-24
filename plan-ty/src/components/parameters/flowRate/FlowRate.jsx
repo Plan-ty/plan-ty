@@ -158,20 +158,7 @@ function FlowRate() {
               {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
               <p id="error">Error placeholder</p>
-            </div>          
-          <div className="sendData" id="right">
-          <input
-
-                id="sendData"
-                type="text"
-                value={inputValue}
-                onChange={(event) => setInputValue(event.target.value)}
-                placeholder="Enter your data"
-              />
-              <button className="button" onClick={sendData}>
-                Send Data
-              </button>
-            </div>
+            </div> 
           </div>
           <div className="box2">
           <DangerThresholds
