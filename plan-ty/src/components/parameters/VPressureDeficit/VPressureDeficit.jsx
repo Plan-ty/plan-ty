@@ -8,11 +8,11 @@ import DangerThresholds from "../../inputs/DangerThresholds";
 
 function VPressureDeficit() {
   const [plant, setPlant] = useState([]);
-  const [inputValue, setInputValue] = useState('');
-  const [upperDangerInput, setUpperDangerInput] = useState('');
-  const [lowerDangerInput, setLowerDangerInput] = useState('');
-  const [upperWarningInput, setUpperWarningInput] = useState('');
-  const [lowerWarningInput, setLowerWarningInput] = useState('');
+  const [inputValue, setInputValue] = useState("");
+  const [upperDangerInput, setUpperDangerInput] = useState("");
+  const [lowerDangerInput, setLowerDangerInput] = useState("");
+  const [upperWarningInput, setUpperWarningInput] = useState("");
+  const [lowerWarningInput, setLowerWarningInput] = useState("");
   const [upperNotificationToggle, setUpperNotificationToggle] = useState(false);
   const [lowerNotificationToggle, setLowerNotificationToggle] = useState(false);
   const [isToggled, setIsToggledUpper] = useState(false);
@@ -23,15 +23,17 @@ function VPressureDeficit() {
     upperDanger: null,
     lowerDanger: null,
   });
-  
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:5021/Plants/thresholds");
-      const data = response.data.thresholds.find(item => item.type === 'vpd');
+      const response = await axios.get(
+        "http://localhost:5021/Plants/thresholds"
+      );
+      const data = response.data.thresholds.find((item) => item.type === "vpd");
       setPlant(response.data);
       setThresholds({
         upperWarning: data.warningMax,
@@ -67,15 +69,15 @@ function VPressureDeficit() {
       max: thresholds.upperDanger,
       min: thresholds.lowerDanger,
     };
-  
-    if (thresholdType === 'warning') {
+
+    if (thresholdType === "warning") {
       if (upperThreshold !== undefined) data.warningMax = upperThreshold;
       if (lowerThreshold !== undefined) data.warningMin = lowerThreshold;
-    } else if (thresholdType === 'danger') {
+    } else if (thresholdType === "danger") {
       if (upperThreshold !== undefined) data.max = upperThreshold;
       if (lowerThreshold !== undefined) data.min = lowerThreshold;
     }
-  
+
     axios
       .patch("http://localhost:5021/Plants/thresholds", data)
       .then((response) => {
@@ -168,7 +170,7 @@ function VPressureDeficit() {
           </div>
         </div>
         <div className="box2">
-        <DangerThresholds
+          <DangerThresholds
             upperDangerInput={upperDangerInput}
             setUpperDangerInput={setUpperDangerInput}
             lowerDangerInput={lowerDangerInput}
@@ -186,12 +188,23 @@ function VPressureDeficit() {
             upperWarningThreshold={thresholds.upperWarning}
             lowerWarningThreshold={thresholds.lowerWarning}
           />
-          </div>
+        </div>
 
-          <div className="notifications">
-        <p>Notifications: </p>
-        {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
-        <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
+        <div className="notifications">
+          <p>Notifications: </p>
+          {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
+          <p>
+            Upper:{" "}
+            <Switch
+              isToggledUpper={isToggled}
+              onToggle={() => setIsToggledUpper(!isToggled)}
+            />{" "}
+            Lower:{" "}
+            <Switch
+              isToggled={isToggledLower}
+              onToggle={() => setIsToggledLower(!isToggledLower)}
+            />
+          </p>
         </div>
         <div className="graph">
           <p>Graph:</p>
