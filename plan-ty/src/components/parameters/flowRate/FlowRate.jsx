@@ -5,10 +5,10 @@ import "./../../parameters/Parameters.css";
 import Chart from "./../../charts/Chart";
 import WarningThresholds from "../../inputs/WarningThresholds";
 import DangerThresholds from "../../inputs/DangerThresholds";
+import TimeDisplay from "../../timeDisplay/TimeDisplay";
 
 function FlowRate() {
   const [plant, setPlant] = useState([]);
-  const [inputValue, setInputValue] = useState('');
   const [upperDangerInput, setUpperDangerInput] = useState('');
   const [lowerDangerInput, setLowerDangerInput] = useState('');
   const [upperWarningInput, setUpperWarningInput] = useState('');
@@ -23,9 +23,15 @@ function FlowRate() {
     upperDanger: null,
     lowerDanger: null,
   });
+  const [isInDangerZone, setIsInDangerZone] = useState(false);
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (plant.waterTemperature < thresholds.lowerDanger || plant.waterTemperature > thresholds.upperDanger) {
+      setIsInDangerZone(true);
+    } else {
+      setIsInDangerZone(false);
+    }
+  }, [plant, thresholds]);
 
   const fetchData = async () => {
     try {
@@ -44,25 +50,6 @@ function FlowRate() {
   };
 
   if (!plant) return null;
-
-  const sendData = () => {
-    axios
-
-      .post("http://localhost:3001/data", inputValue)
-
-    //!!!!!change the link here for connecting to actual backend
-      .post("http://localhost:3001/data", inputValue )
-
-      .then((response) => {
-        console.log("Data sent successfully:", response.data);
-        // After sending the data, fetch updated data to refresh the view
-        fetchData();
-        setInputValue(""); // Clear input field
-      })
-      .catch((error) => {
-        console.error("Error sending data:", error);
-      });
-  };
 
   const sendThresholdData = (upperThreshold, lowerThreshold, thresholdType) => {
     const data = {
@@ -134,78 +121,55 @@ function FlowRate() {
       });
   };
 
+   // eslint-disable-next-line
   const handleInputChange = (event, setValue) => {
     setValue(event.target.value);
     //indirectly used here as a callback function for handling input changes, thats why its giving a warning
   };
 
-  //TODO: do it as a component so that it can always be displayed on each page
-  const date = new Date();
-  const showTime =
-    date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-
   return (
-    <div className="everyhing">
       <div>
         <h1>WATER FLOW RATE</h1>
         <div className="container">
           <div className="box1">
-
             <div className="lastFetched" id="left">
-              <p>
-                Last Fetched at: {showTime} - {plant.rate} gallons/square foot
-              </p>
+              <p>Last Fetched at: <TimeDisplay /> - {plant.rate} gallons/square foot</p>
               {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
-              <p id="error">Error placeholder</p>
-            </div>          
-          <div className="sendData" id="right">
-          <input
-
-                id="sendData"
-                type="text"
-                value={inputValue}
-                onChange={(event) => setInputValue(event.target.value)}
-                placeholder="Enter your data"
-              />
-              <button className="button" onClick={sendData}>
-                Send Data
-              </button>
-            </div>
+              {isInDangerZone && <p id="error">The Current Levels Are In Danger Zone!</p>}
+            </div> 
           </div>
           <div className="box2">
-          <DangerThresholds
-            upperDangerInput={upperDangerInput}
-            setUpperDangerInput={setUpperDangerInput}
-            lowerDangerInput={lowerDangerInput}
-            setLowerDangerInput={setLowerDangerInput}
-            sendThresholdData={sendThresholdData}
-            upperDangerThreshold={thresholds.upperDanger}
-            lowerDangerThreshold={thresholds.lowerDanger}
-          />
-            <WarningThresholds
-            upperWarningInput={upperWarningInput}
-            setUpperWarningInput={setUpperWarningInput}
-            lowerWarningInput={lowerWarningInput}
-            setLowerWarningInput={setLowerWarningInput}
-            sendThresholdData={sendThresholdData}
-            upperWarningThreshold={thresholds.upperWarning}
-            lowerWarningThreshold={thresholds.lowerWarning}
-          />
+            <DangerThresholds
+              upperDangerInput={upperDangerInput}
+              setUpperDangerInput={setUpperDangerInput}
+              lowerDangerInput={lowerDangerInput}
+              setLowerDangerInput={setLowerDangerInput}
+              sendThresholdData={sendThresholdData}
+              upperDangerThreshold={thresholds.upperDanger}
+              lowerDangerThreshold={thresholds.lowerDanger}
+            />
+              <WarningThresholds
+              upperWarningInput={upperWarningInput}
+              setUpperWarningInput={setUpperWarningInput}
+              lowerWarningInput={lowerWarningInput}
+              setLowerWarningInput={setLowerWarningInput}
+              sendThresholdData={sendThresholdData}
+              upperWarningThreshold={thresholds.upperWarning}
+              lowerWarningThreshold={thresholds.lowerWarning}
+            />
           </div>
-          
           <div className="notifications">
-        <p>Notifications: </p>
-        {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
-        <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
-        </div>
+            <p>Notifications: </p>
+            {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
+            <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
+          </div>
           <div className="graph">
             <p>Graph:</p>
             <Chart dataKey="flowRate" yAxisLabel="Flow Rate (GPM)" />
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

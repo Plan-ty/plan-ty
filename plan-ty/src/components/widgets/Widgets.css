@@ -1,0 +1,55 @@
+.widget {
+  border: 1px solid black;
+  padding: 18px;
+  margin: 10px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25%;
+}
+
+.widget h3 {
+  margin: 0;
+  font-size: 1.5em;
+  background-color: transparent;
+}
+
+.widget p {
+  margin: 8px 0;
+  background-color: transparent;
+}
+
+.widget button {
+  padding: 8px 16px;
+  font-size: 1em;
+  cursor: pointer;
+  background-color: #D9D9D9;
+  border: 1px solid black; 
+  border-radius: 8px;
+  outline: none;
+  width: auto;
+  align-self: center;
+}
+
+.widget button:hover {
+  background-color: #96C5C0;
+}
+
+@media (max-width: 767px) {
+  .widget {
+    width: 43%;
+    font-size: 0.8em;
+    margin: 2px;
+  }
+}
+
+@media (max-width: 423px) {
+  .widget {
+    width: 70%;
+    font-size: 0.7em;
+  }
+}
