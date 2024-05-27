@@ -44,20 +44,6 @@ function WaterLevel() {
     }
   };
 
-  const sendData = () => {
-    axios
-      .post("http://localhost:3001/data", inputValue)
-      .then((response) => {
-        console.log("Data sent successfully:", response.data);
-        // After sending the data, fetch updated data to refresh the view
-        fetchData();
-        setInputValue(""); // Clear input field
-      })
-      .catch((error) => {
-        console.error("Error sending data:", error);
-      });
-  };
-
   const sendThresholdData = (upperThreshold, lowerThreshold, thresholdType) => {
     const data = {
       type: "waterLevel",

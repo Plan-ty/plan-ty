@@ -45,21 +45,6 @@ function WaterTemp() {
   };
   if (!plant) return null;
 
-
-  const sendData = () => {
-    axios
-      .post("http://localhost:5021/Plants/thresholds", inputValue )
-      .then((response) => {
-        console.log("Data sent successfully:", response.data);
-        // After sending the data, fetch updated data to refresh the view
-        //fetchData();
-        setInputValue(""); // Clear input field
-      })
-      .catch((error) => {
-        console.error("Error sending data:", error);
-      });
-  };
-
   const sendThresholdData = (upperThreshold, lowerThreshold, thresholdType) => {
     const data = {
       type: "waterTemperature",
@@ -194,6 +179,22 @@ function WaterTemp() {
 export default WaterTemp;
 
 /*
+
+const sendData = () => {
+    axios
+      .post("http://localhost:5021/Plants/thresholds", inputValue )
+      .then((response) => {
+        console.log("Data sent successfully:", response.data);
+        // After sending the data, fetch updated data to refresh the view
+        //fetchData();
+        setInputValue(""); // Clear input field
+      })
+      .catch((error) => {
+        console.error("Error sending data:", error);
+      });
+  };
+  
+
 <div className="notifications">
             <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
               { {data.map((item) => (<div key={item.id}> Upper: {item.upperNotif}, Lower: {item.lowerNotif}</div>))} }
