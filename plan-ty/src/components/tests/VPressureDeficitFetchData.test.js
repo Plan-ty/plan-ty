@@ -43,38 +43,3 @@ describe("VPressureDeficit component data fetching", () => {
     );
   });
 });
-
-/*
-describe("VPressureDeficit component", () => {
-  it("fetches data from the API and sets state", async () => {
-    axios.get.mockResolvedValueOnce(mockAxiosResponse);
-
-    render(<VPressureDeficit />);
-
-    // Check if axios.get is called with the correct URL
-    expect(axios.get).toHaveBeenCalledWith(
-      "https://jsonplaceholder.typicode.com/posts/1"
-    );
-
-    // Wait for the component to finish fetching data and update state
-    expect(
-      await screen.findByText("VAPOR PRESSURE DEFICIT")
-    ).toBeInTheDocument();
-    expect(await screen.findByText(/Last Fetched at:/i)).toBeInTheDocument();
-  });
-
-  it("handles API request error", async () => {
-    const expectedErrorMessage = "API request failed";
-    axios.get.mockRejectedValueOnce(new Error(expectedErrorMessage));
-
-    render(<VPressureDeficit />);
-
-    // Check if axios.get is called with the correct URL
-    expect(axios.get).toHaveBeenCalledWith(
-      "https://jsonplaceholder.typicode.com/posts/1"
-    );
-*/
-/* // Check if the error message is rendered
-    const errorMessage = "Error placeholder";
-    const errorElement = await screen.findByText(errorMessage);
-    expect(errorElement).toBeInTheDocument();*/
