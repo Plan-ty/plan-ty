@@ -5,10 +5,10 @@ import "./../../parameters/Parameters.css";
 import Chart from "./../../charts/Chart";
 import WarningThresholds from "../../inputs/WarningThresholds";
 import DangerThresholds from "../../inputs/DangerThresholds";
+import TimeDisplay from "../../timeDisplay/TimeDisplay";
 
 function VPressureDeficit() {
   const [plant, setPlant] = useState([]);
-  const [inputValue, setInputValue] = useState("");
   const [upperDangerInput, setUpperDangerInput] = useState("");
   const [lowerDangerInput, setLowerDangerInput] = useState("");
   const [upperWarningInput, setUpperWarningInput] = useState("");
@@ -23,10 +23,15 @@ function VPressureDeficit() {
     upperDanger: null,
     lowerDanger: null,
   });
+  const [isInDangerZone, setIsInDangerZone] = useState(false);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (plant.waterTemperature < thresholds.lowerDanger || plant.waterTemperature > thresholds.upperDanger) {
+      setIsInDangerZone(true);
+    } else {
+      setIsInDangerZone(false);
+    }
+  }, [plant, thresholds]);
 
   const fetchData = async () => {
     try {
@@ -117,17 +122,12 @@ function VPressureDeficit() {
       });
   };
 
+   // eslint-disable-next-line
   const handleInputChange = (event, setValue) => {
     setValue(event.target.value);
     //indirectly used here as a callback function for handling input changes, thats why its giving a warning
   };
 
-  //TODO: do it as a component so that it can always be displayed on each page
-  const date = new Date();
-  const showTime =
-    date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-
-  // console.log(data.waterTemperature)
   return (
     <div>
       <h1>VAPOR PRESSURE DEFICIT</h1>
@@ -135,12 +135,10 @@ function VPressureDeficit() {
         <div className="box1">
           <div className="lastFetched" id="left">
             {/* !!!!!Change the plant.waterTemperature to the name of the actual value passed in the json object */}
-            <p>
-              Last Fetched at: {showTime} - {plant.light} kPa
-            </p>
+            <p>Last Fetched at: <TimeDisplay /> - {plant.light} kPa</p>
             {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
             {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
-            <p id="error">Error placeholder</p>
+            {isInDangerZone && <p id="error">The Current Levels Are In Danger Zone!</p>}
           </div>
         </div>
         <div className="box2">
@@ -163,22 +161,10 @@ function VPressureDeficit() {
             lowerWarningThreshold={thresholds.lowerWarning}
           />
         </div>
-
         <div className="notifications">
           <p>Notifications: </p>
           {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
-          <p>
-            Upper:{" "}
-            <Switch
-              isToggledUpper={isToggled}
-              onToggle={() => setIsToggledUpper(!isToggled)}
-            />{" "}
-            Lower:{" "}
-            <Switch
-              isToggled={isToggledLower}
-              onToggle={() => setIsToggledLower(!isToggledLower)}
-            />
-          </p>
+          <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>          
         </div>
         <div className="graph">
           <p>Graph:</p>
