@@ -133,7 +133,7 @@ function WaterTemp() {
           <div className="box1">
             <div className="lastFetched" id="left">
               {/* !!!!!Change the plant.waterTemperature to the name of the actual value passed in the json object */}
-              <p>Last Fetched at: <TimeDisplay /> - {plant.waterTemperature}°C</p>
+              <p id="fetched">Last Fetched at: <TimeDisplay /> - {plant.waterTemperature}°C</p>
               {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
               {isInDangerZone && <p id="error">The Current Levels Are In Danger Zone!</p>}
@@ -160,12 +160,16 @@ function WaterTemp() {
             />
           </div>
           <div className="notifications">
-            <p>Notifications: </p>
+            <h3>Notifications: </h3>
             {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
-            <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
+            <div className="notifContainer">
+            <p id="upp"> Upper   <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/></p>
+            <p id="low"> Lower   <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
+
+            </div>
           </div>
           <div className="graph">
-            <p>Graph:</p>
+            <h3>Graph:</h3>
             <Chart dataKey="waterTemperature" yAxisLabel="Water Temperature (°C)" />
           </div>
         </div>

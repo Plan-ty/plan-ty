@@ -21,14 +21,17 @@ const WarningThresholds = ({
 
   return (
     <div className="warningThresholds" id="right">
-      <p>Warning Levels:</p>
-      <p data-cy="war">Upper Threshold: {upperWarningThreshold} Lower Threshold: {lowerWarningThreshold}</p>
+      <h3>Warning Levels:</h3>
+      <div className='inputContainer'>
+      <p data-cy="war">Upper Threshold: {upperWarningThreshold}</p>
+      <p data-cy="war">Lower Threshold: {lowerWarningThreshold}</p>
+      </div>
       <input
         id="upper"
         type="text"
         value={upperWarningInput}
         onChange={(event) => setUpperWarningInput(event.target.value)}
-        placeholder="Enter Upper Level"
+        placeholder=" Enter Upper Level"
       />
       <button className="button1" onClick={handleSetUpper}>Set Upper</button>
       <input
@@ -36,7 +39,7 @@ const WarningThresholds = ({
         type="text"
         value={lowerWarningInput}
         onChange={(event) => setLowerWarningInput(event.target.value)}
-        placeholder="Enter Lower Level"
+        placeholder=" Enter Lower Level"
       />
       <button className="button2" onClick={handleSetLower}>Set Lower</button>
     </div>
