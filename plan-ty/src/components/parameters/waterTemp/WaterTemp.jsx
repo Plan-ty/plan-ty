@@ -78,45 +78,32 @@ function WaterTemp() {
       });
   };
   
-  
-
-  const toggleUpperNotification = () => {
-    const newUpperNotificationToggle = !upperNotificationToggle;
-  setUpperNotificationToggle(newUpperNotificationToggle);
-  
-  // Send notification status to backend for upper threshold
-  axios
-    .post("http://192.168.156.250:5021/Plants/1/temperature", {
-      upperEnabled: newUpperNotificationToggle,
-      lowerEnabled: lowerNotificationToggle // Keep lower threshold status unchanged
-    })
-    .then((response) => {
-      console.log("Upper Notification status sent successfully:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error sending upper notification status:", error);
-    });
-   
+  const handleToggleUpperNotification = () => {
+    const newToggleState = !upperNotificationToggle;
+    setIsToggledUpper(newToggleState);
+    setUpperNotificationToggle(newToggleState);
   };
 
-  const toggleLowerNotification = () => {
-    const newLowerNotificationToggle = !lowerNotificationToggle;
-  setLowerNotificationToggle(newLowerNotificationToggle);
-
-  // Send notification status to backend for lower threshold
-  axios
-    .post("http://192.168.156.250:5021/Plants/1/temperature", {
-      upperEnabled: upperNotificationToggle, // Keep upper threshold status unchanged
-      lowerEnabled: newLowerNotificationToggle
-    })
-    .then((response) => {
-      console.log("Lower Notification status sent successfully:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error sending lower notification status:", error);
-    });
+  const handleToggleLowerNotification = () => {
+    const newToggleState = !lowerNotificationToggle;
+    setIsToggledLower(newToggleState);
+    setLowerNotificationToggle(newToggleState);
   };
-  
+
+  const sendNotificationSettings = () => {
+    axios
+      .patch("http://localhost:8989/plants/notification", {
+        upperEnabled: upperNotificationToggle,
+        lowerEnabled: lowerNotificationToggle
+      })
+      .then((response) => {
+        console.log("Notification settings sent successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error sending notification settings:", error);
+      });
+  };
+
    // eslint-disable-next-line
   const handleInputChange = (event, setValue) => {
     setValue(event.target.value);
@@ -161,8 +148,11 @@ function WaterTemp() {
           </div>
           <div className="notifications">
             <p>Notifications: </p>
-            {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
-            <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
+            <p>
+              Upper: <Switch isToggled={isToggled} onToggle={handleToggleUpperNotification} /> 
+              Lower: <Switch isToggled={isToggledLower} onToggle={handleToggleLowerNotification} />
+            </p>
+            <button id="notification-button" onClick={sendNotificationSettings}>Update Notifications</button>
           </div>
           <div className="graph">
             <p>Graph:</p>
@@ -175,30 +165,3 @@ function WaterTemp() {
 
 
 export default WaterTemp;
-
-/*
-
-const sendData = () => {
-    axios
-      .post("http://localhost:5021/Plants/thresholds", inputValue )
-      .then((response) => {
-        console.log("Data sent successfully:", response.data);
-        // After sending the data, fetch updated data to refresh the view
-        //fetchData();
-        setInputValue(""); // Clear input field
-      })
-      .catch((error) => {
-        console.error("Error sending data:", error);
-      });
-  };
-  
-
-<div className="notifications">
-            <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
-              { {data.map((item) => (<div key={item.id}> Upper: {item.upperNotif}, Lower: {item.lowerNotif}</div>))} }
-              <p>
-              Upper:{" "}<button onClick={toggleUpperNotification}>{upperNotificationToggle ? "On" : "Off"}</button>{" "}
-              Lower:{" "}<button onClick={toggleLowerNotification}>{lowerNotificationToggle ? "On" : "Off"}</button>
-            </p>
-          </div>   
-*/

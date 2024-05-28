@@ -6,13 +6,17 @@ const Switch = ({ rounded = true, isToggled, onToggle }) => {
 
     const sliderCX = cx('slider', {
         'rounded': rounded
-    })
+    });
+
+    const handleToggle = () => {
+        onToggle(!isToggled);
+    };
 
     return (
-    <label className="switch">
-        <input type="checkbox" checked={isToggled} onChange={onToggle}/>
-        <span className={sliderCX}/>
-    </label>
+        <label className="switch">
+            <input type="checkbox" checked={isToggled} onChange={handleToggle}/>
+            <span className={sliderCX}/>
+        </label>
     );
 };
 
