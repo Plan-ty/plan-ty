@@ -54,7 +54,7 @@ function WaterTemp() {
 
   const fetchNotificationData = async () => {
     try {
-      const response = await axios.get("http://localhost:8989/Plants/notif");
+      const response = await axios.get("http://localhost:5021/AlertsNotification/0");
       console.log("Fetched notification data:", response.data);
       setUpperNotificationToggle(response.data.upperEnabled);
       setLowerNotificationToggle(response.data.lowerEnabled);
@@ -103,8 +103,7 @@ function WaterTemp() {
 
   const sendNotificationSettings = () => {
     axios
-      .patch("http://localhost:8989/plants/notification", {
-        id: 0,
+      .patch("http://localhost:5021/AlertsNotification/0", {
         upperEnabled: upperNotificationToggle,
         lowerEnabled: lowerNotificationToggle
       })
