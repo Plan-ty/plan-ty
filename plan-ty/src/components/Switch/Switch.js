@@ -1,23 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./Switch.css";
 import cx from "classnames";
 
-const Switch = ({ rounded = true, isToggled, onToggle }) => {
+const Switch = ({ rounded = true, initialStateUrl, isToggled, onToggle }) => {
+  const [toggleState, setToggleState] = useState(isToggled);
 
-    const sliderCX = cx('slider', {
-        'rounded': rounded
-    });
+  useEffect(() => {
+    if (initialStateUrl) {
+      axios.get(initialStateUrl)
+        .then(response => {
+          setToggleState(response.data.isToggled);
+          // Only call onToggle if the fetched state differs from the prop
+          if (response.data.isToggled !== isToggled) {
+            onToggle(response.data.isToggled);
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching initial state:", error);
+        });
+    }
+  }, [initialStateUrl, isToggled, onToggle]);
 
-    const handleToggle = () => {
-        onToggle(!isToggled);
-    };
+  const sliderCX = cx('slider', {
+    'rounded': rounded
+  });
 
-    return (
-        <label className="switch">
-            <input type="checkbox" checked={isToggled} onChange={handleToggle}/>
-            <span className={sliderCX}/>
-        </label>
-    );
+  const handleToggle = () => {
+    const newState = !toggleState;
+    setToggleState(newState);
+    onToggle(newState);
+  };
+
+  return (
+    <label className="switch">
+      <input type="checkbox" checked={toggleState} onChange={handleToggle} />
+      <span className={sliderCX} />
+    </label>
+  );
 };
 
 export default Switch;
