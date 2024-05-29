@@ -147,7 +147,7 @@ function WaterTemp() {
       />
     </div>
     <div className="notifications">
-      <p>Notifications: </p>
+      <p>Notifications: Upper: {upperNotificationToggle ? "Enabled" : "Disabled"}, Lower: {lowerNotificationToggle ? "Enabled" : "Disabled"}</p>
       <p>
         Upper: <Switch isToggled={upperNotificationToggle} onToggle={handleToggleUpperNotification} /> 
         Lower: <Switch isToggled={lowerNotificationToggle} onToggle={handleToggleLowerNotification} />
