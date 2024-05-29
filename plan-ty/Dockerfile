@@ -1,14 +1,11 @@
 # Use the official Node.js 16.10-alpine image as the base
-FROM node:alpine AS development
-
-# Declaring env
-ENV NODE_ENV development
+FROM node:21-alpine
 
 # Set the working directory to /app
 WORKDIR /app
 
 # Copy package.json and package-lock.json first
-COPY ./package*.json /app
+COPY package*.json .
 
 # Build the app
 RUN npm install
