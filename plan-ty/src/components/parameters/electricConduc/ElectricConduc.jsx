@@ -155,12 +155,12 @@ function ElectricConduc() {
             />
           </div>
           <div className="notifications">
-            <p>Notifications: </p>
+            <h3>Notifications: </h3>
             {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
             <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
           </div>
           <div className="graph">
-            <p>Graph:</p>
+            <h3>Graph:</h3>
             <Chart dataKey="electricConductivity" yAxisLabel="Electric Conductiviy (uS/cm)" />
           </div>
         </div>

@@ -107,6 +107,17 @@ input[type="text"], textarea {
      }
 }
 
+
+@media (max-width: 490px) {
+    .lastFetched, .notifContainer, .graph{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        max-width: 90%;
+    }
+}
+
 h1{
     color: #000;
     margin-top: 125px;
