@@ -25,6 +25,7 @@ function DewPoint() {
 
   useEffect(() => {
     fetchData();
+    fetchDewPoint();
     fetchNotificationData();
   }, []);
 
@@ -50,6 +51,18 @@ function DewPoint() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const fetchDewPoint = async () => {
+    await axios
+    //!!!!!change the link here for connecting to actual backend
+      .get("http://localhost:5021/Plants/dewPoint")
+      .then((response) => {
+        setPlant(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   };
 
   const fetchNotificationData = async () => {

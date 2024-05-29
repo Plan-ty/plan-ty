@@ -25,6 +25,7 @@ function AirTemp() {
 
   useEffect(() => {
     fetchData();
+    fetchAirTemp();
     fetchNotificationData();
   }, []);
 
@@ -50,6 +51,18 @@ function AirTemp() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const fetchAirTemp = async () => {
+    await axios
+    //!!!!!change the link here for connecting to actual backend
+      .get("http://localhost:5021/airTemperature")
+      .then((response) => {
+        setPlant(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   };
 
   const fetchNotificationData = async () => {
@@ -126,7 +139,7 @@ function AirTemp() {
           <div className="box1">
             <div className="lastFetched" id="left">
               {/* !!!!!Change the plant.airTemperature to the name of the actual value passed in the json object */}
-              <p>Last Fetched at: <TimeDisplay /> - {plant.waterTemperature}°C</p>
+              <p>Last Fetched at: <TimeDisplay /> - {plant.airTemperatureInC}°C</p>
               {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
               {/* {data.map((item) => (<div key={item.id}>{item.airTemperature}</div>))} */}
               {isInDangerZone && <p id="error">The Current Levels Are In Danger Zone!</p>}

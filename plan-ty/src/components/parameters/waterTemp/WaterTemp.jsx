@@ -25,6 +25,7 @@ function WaterTemp() {
 
   useEffect(() => {
     fetchData();
+    fetchTemperature();
     fetchNotificationData();
   }, []);
 
@@ -50,6 +51,18 @@ function WaterTemp() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const fetchTemperature = async () => {
+    await axios
+    //!!!!!change the link here for connecting to actual backend
+      .get("http://localhost:5021/temperature")
+      .then((response) => {
+        setPlant(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   };
 
   const fetchNotificationData = async () => {

@@ -25,6 +25,7 @@ function VPressureDeficit() {
 
   useEffect(() => {
     fetchData();
+    fetchVpd();
     fetchNotificationData();
   }, []);
 
@@ -52,6 +53,18 @@ function VPressureDeficit() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const fetchVpd = async () => {
+    await axios
+    //!!!!!change the link here for connecting to actual backend
+      .get("http://localhost:5021/Plants/vpd")
+      .then((response) => {
+        setPlant(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   };
 
   const fetchNotificationData = async () => {
@@ -127,7 +140,7 @@ function VPressureDeficit() {
         <div className="box1">
           <div className="lastFetched" id="left">
             {/* !!!!!Change the plant.waterTemperature to the name of the actual value passed in the json object */}
-            <p>Last Fetched at: <TimeDisplay /> - {plant.light} kPa</p>
+            <p>Last Fetched at: <TimeDisplay /> - {plant.vpdLevel} kPa</p>
             {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
             {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
             {isInDangerZone && <p id="error">The Current Levels Are In Danger Zone!</p>}

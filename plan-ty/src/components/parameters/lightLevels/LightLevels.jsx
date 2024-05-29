@@ -25,6 +25,7 @@ function LightLevels() {
 
   useEffect(() => {
     fetchData();
+    fetchLightLevel();
     fetchNotificationData();
   }, []);
 
@@ -50,6 +51,18 @@ function LightLevels() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const fetchLightLevel = async () => {
+    await axios
+    //!!!!!change the link here for connecting to actual backend
+      .get("http://localhost:5021/Plants/lightLevel")
+      .then((response) => {
+        setPlant(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   };
 
   const fetchNotificationData = async () => {

@@ -25,6 +25,7 @@ function ElectricConduc() {
 
   useEffect(() => {
     fetchData();
+    fetchElectricConductivity();
     fetchNotificationData();
   }, []);
 
@@ -50,6 +51,18 @@ function ElectricConduc() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const fetchElectricConductivity = async () => {
+    await axios
+    //!!!!!change the link here for connecting to actual backend
+      .get("http://localhost:5021/Plants/waterEC")
+      .then((response) => {
+        setPlant(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   };
 
   const fetchNotificationData = async () => {
