@@ -1,34 +1,29 @@
-    import React, { useState, useEffect } from "react";
-    import axios from "axios";
-    import "../home/Home.css";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../home/Home.css";
 
-    const EnergyUsage = () => {
+const EnergyUsage = () => {
+    const [energy, setEnergyUsage] = useState('');
 
-        const [energy, setEnergyUsage] = useState('');
-       
-        useEffect(() => {
-            energyUsage();
-          }, []);
-        
-          const energyUsage = async () => {
-            try {
-              const response = await axios.get("http://localhost:5021");
-              setEnergyUsage(response);
-            } catch (error) {
-              console.error("Error getting Energy Usage:", error);
-            }
-          };
-    
+    useEffect(() => {
+        energyUsage();
+    }, []);
 
-
-          return (
-            <div className="energyUsage">
-                <h3>Energy Usage(J): {energy} </h3>
-
-            </div>
-          )
+    const energyUsage = async () => {
+        try {
+            const response = await axios.get("http://localhost:8989/energyUsage");
+            console.log(response.data); // Log the response data to see its structure
+            setEnergyUsage(response.data.energy); // Access the specific property
+        } catch (error) {
+            console.error("Error getting Energy Usage:", error);
+        }
     };
 
+    return (
+        <div className="energyUsage">
+            <h3>Energy Usage(J): {energy} </h3>
+        </div>
+    );
+};
 
-
-    export default EnergyUsage;
+export default EnergyUsage;
