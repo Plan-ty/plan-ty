@@ -160,14 +160,16 @@ function WaterTemp() {
     </div>
     <div className="notifications">
       <p>Notifications: Upper: {upperNotificationToggle ? "Enabled" : "Disabled"}, Lower: {lowerNotificationToggle ? "Enabled" : "Disabled"}</p>
+      <div className="notifContainer">
       <p>
         Upper: <Switch isToggled={upperNotificationToggle} onToggle={handleToggleUpperNotification} /> 
         Lower: <Switch isToggled={lowerNotificationToggle} onToggle={handleToggleLowerNotification} />
       </p>
+      </div>
       <button id="notification-button" onClick={sendNotificationSettings}>Update Notifications</button>
     </div>
     <div className="graph">
-      <p>Graph:</p>
+      <h3>Graph:</h3>
       <Chart dataKey="waterTemperature" yAxisLabel="Water Temperature (°C)" />
     </div>
   </div>
