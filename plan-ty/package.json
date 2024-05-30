@@ -7,6 +7,7 @@
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.2",
     "classnames": "^2.5.1",
+    "gh-pages": "^6.1.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.2",
     "react-chartjs-2": "^5.2.0",
@@ -16,7 +17,12 @@
     "resize-observer-polyfill": "^1.5.1",
     "web-vitals": "^2.1.4"
   },
+
+  "homepage": "https://Plan-ty.github.io/plan-ty",
+
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start --host 0.0.0.0",
     "build": "react-scripts build",
     "test": "react-scripts test",
