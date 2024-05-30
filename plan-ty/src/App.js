@@ -63,7 +63,7 @@ function App() {
           )}
           {isAuthenticated && (
             <>
-              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/waterTemp" element={<WaterTemp />} />
               <Route path="/flowRate" element={<FlowRate />} />
               <Route path="/electricConduc" element={<ElectricConduc />} />
