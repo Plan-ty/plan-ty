@@ -1,0 +1,28 @@
+/* TemplatesManager.css */
+
+.template-management {
+    width: 20%;
+    background-color: #1f6357;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .template-card {
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #96C5C0;
+    color: white;
+  }
+  
+  .template-card.add-template {
+    background-color: #96C5C0;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+  }
+  

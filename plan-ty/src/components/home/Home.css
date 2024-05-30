@@ -1,0 +1,39 @@
+/* Home.css */
+
+.home {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10%;
+    margin-left: 2%;
+  }
+  
+  .dashboard {
+    width: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    background-color: #1f6357;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 20px;
+    margin-right: 2%;
+  }
+  .dashboard p{
+    background-color: transparent;
+    color: white;
+    
+  }
+  
+  @media (max-width: 767px) {
+    .home {
+      flex-direction: column;
+    }
+  
+    .template-management,
+    .dashboard {
+      width: 100%;
+    }
+  }
+  
