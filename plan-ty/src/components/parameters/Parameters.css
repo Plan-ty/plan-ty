@@ -1,6 +1,8 @@
 
 *{
-    background-color: #96C5C0;
+    /*background-color: #96C5C0;*/
+    /*background-color: #D6FFF5;*/
+    background-color: #D6FFF5;
 }
 
 .box1{
@@ -44,16 +46,16 @@ input[type="text"], textarea {
    align-items:center;
 }
   
-.button, .button1, .button2{
+.button, .button1, .button2, #notification-button {
     background-color: #D9D9D9;
     border-radius: 8px;
     cursor: pointer;
     outline:none;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
-.button:hover, .button1:hover, .button2:hover{
+.button:hover, .button1:hover, .button2:hover, #notification-button:hover{
     background-color: #AEEAC9;
    
 }
@@ -61,10 +63,12 @@ input[type="text"], textarea {
 #lower, #upper, #sendData {
     justify-content: space-between;
     margin-right: 5px ;
-    margin-left: 15px;
+    margin-left: 10px;
     border-radius: 8px;
-    padding-top: 7px;
-    padding-bottom: 7px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 1px;
+    padding-left: 1px;
 
 }
 
@@ -76,7 +80,7 @@ input[type="text"], textarea {
 }
 
 
-@media (max-width: 1177.60px) {
+@media (max-width: 1400px) {
     #lower, #upper, #sendData{
         margin-left: 30px;
         margin-top: 20px;
@@ -89,9 +93,77 @@ input[type="text"], textarea {
 
 }
 
+@media (max-width: 767px) {
+    #lower, #upper{
+        margin-bottom: 10px;
+      }
+    
+     .button1{
+        margin-bottom: 10px;
+     } 
+
+     .button2{
+        margin-bottom: 20px;
+     }
+}
+
+
+@media (max-width: 490px) {
+    .lastFetched, .notifContainer, .graph{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        max-width: 90%;
+    }
+}
+
 h1{
     color: #000;
     margin-top: 125px;
+    text-align: center;
+    padding-left: 17.5px;
+
 }
 
+h3{
+    font-size: 25px;
+    padding: 15px;
+}
+
+.inputContainer{
+    display: flex;
+    align-items: center; 
+    text-align: center;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.notifContainer{
+    display: flex;
+    align-items: center; 
+    text-align: center;
+    justify-content: space-around;
+    padding: 5px;
+}
+
+
+.button2Danger{
+    margin-right: 7px;
+}
+
+.lastFetched{
+    justify-content: center;
+    text-align: center;
+}
+
+#upp, #low{
+    top: 50%;
+    left: 50%;
+    border-radius: 4px;
+}
+
+#fetched{
+    font-size: 19px;
+}
 

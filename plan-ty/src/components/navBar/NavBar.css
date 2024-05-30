@@ -15,7 +15,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 15px 85.333px;
-    background: #1F6357;
+    /*background: #1F6357;*/
+    /*background-color: #EBFFFA;*/
+    /*background-color: #AEEAC9;*/
+    /*background-color: rgb(164, 239, 194);*/
+    /*background-color: rgb(160, 235, 214);*/
+    background-color:#D6FFF5;
     box-shadow: 0px 5.333px 80px 0 rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
@@ -47,12 +52,16 @@
 
 .navbar--content {
     color: var(--darkblue);
+    background-color: #96C5C0;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 24px;
     cursor: pointer;
     padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 35px;
+    padding-right: 35px;
 }
 
 .navbar--active-content {
@@ -62,7 +71,7 @@
 .logo {
     font-size: 25px; /* Adjust font size as needed */
     font-family: Arial, Helvetica, sans-serif;
-    color: #f1f7f6;
+    color:#719896;
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -148,4 +157,35 @@
     border-radius: 10px; /* Adjust the value as needed for the desired roundness */
 }
 
+.logout-button {
+    background-color: var(--logout-bg);
+    color: var(--logout-color);
+    border: none;
+    border-radius: 10px; /* Add rounded corners */
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: var(--logout-hover-bg);
+}
+
+.login-button {
+    background-color: var(--logout-bg);
+    color: var(--logout-color);
+    border: none;
+    border-radius: 10px; /* Add rounded corners */
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: var(--logout-hover-bg);
+}
 /* Navbar Styler Ends */

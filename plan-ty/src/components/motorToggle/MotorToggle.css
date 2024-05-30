@@ -22,6 +22,7 @@
   
   .motor-toggle button.off {
     background-color: #d7a8a5;
+  
     color: white;
   }
   .motor-toggle button.off:hover{

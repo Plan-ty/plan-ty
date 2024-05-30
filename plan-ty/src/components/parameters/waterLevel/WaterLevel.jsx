@@ -15,8 +15,6 @@ function WaterLevel() {
   const [lowerWarningInput, setLowerWarningInput] = useState('');
   const [upperNotificationToggle, setUpperNotificationToggle] = useState(false);
   const [lowerNotificationToggle, setLowerNotificationToggle] = useState(false);
-  const [isToggled, setIsToggledUpper] = useState(false);
-  const [isToggledLower, setIsToggledLower] = useState(false);
   const [thresholds, setThresholds] = useState({
     upperWarning: null,
     lowerWarning: null,
@@ -24,6 +22,12 @@ function WaterLevel() {
     lowerDanger: null,
   });
   const [isInDangerZone, setIsInDangerZone] = useState(false);
+
+  useEffect(() => {
+    fetchData();
+    fetchWaterLevel();
+    fetchNotificationData();
+  }, []);
 
   useEffect(() => {
     if (plant.waterTemperature < thresholds.lowerDanger || plant.waterTemperature > thresholds.upperDanger) {
@@ -46,6 +50,29 @@ function WaterLevel() {
       });
     } catch (error) {
       console.error("Error fetching data:", error);
+    }
+  };
+
+  const fetchWaterLevel = async () => {
+    await axios
+    //!!!!!change the link here for connecting to actual backend
+      .get("http://localhost:5021/Plants/waterLevel")
+      .then((response) => {
+        setPlant(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  const fetchNotificationData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5021/AlertsNotification/3");
+      console.log("Fetched notification data:", response.data);
+      setUpperNotificationToggle(response.data.upperEnabled);
+      setLowerNotificationToggle(response.data.lowerEnabled);
+    } catch (error) {
+      console.error("Error fetching notification data:", error);
     }
   };
 
@@ -77,52 +104,29 @@ function WaterLevel() {
       });
   };
 
-  const toggleUpperNotification = () => {
-    const newUpperNotificationToggle = !upperNotificationToggle;
-    setUpperNotificationToggle(newUpperNotificationToggle);
-
-    // Send notification status to backend for upper threshold
-    axios
-      .post("http://localhost:3001/data", {
-        upperEnabled: newUpperNotificationToggle,
-        lowerEnabled: lowerNotificationToggle, // Keep lower threshold status unchanged
-      })
-      .then((response) => {
-        console.log(
-          "Upper Notification status sent successfully:",
-          response.data
-        );
-      })
-      .catch((error) => {
-        console.error("Error sending upper notification status:", error);
-      });
+  const handleToggleUpperNotification = () => {
+    const newToggleState = !upperNotificationToggle;
+    setUpperNotificationToggle(newToggleState);
   };
 
-  const toggleLowerNotification = () => {
-    const newLowerNotificationToggle = !lowerNotificationToggle;
-    setLowerNotificationToggle(newLowerNotificationToggle);
-
-    // Send notification status to backend for lower threshold
-    axios
-      .post("http://localhost:3001/data", {
-        upperEnabled: upperNotificationToggle, // Keep upper threshold status unchanged
-        lowerEnabled: newLowerNotificationToggle,
-      })
-      .then((response) => {
-        console.log(
-          "Lower Notification status sent successfully:",
-          response.data
-        );
-      })
-      .catch((error) => {
-        console.error("Error sending lower notification status:", error);
-      });
+  const handleToggleLowerNotification = () => {
+    const newToggleState = !lowerNotificationToggle;
+    setLowerNotificationToggle(newToggleState);
   };
 
-   // eslint-disable-next-line
-  const handleInputChange = (event, setValue) => {
-    setValue(event.target.value);
-    //indirectly used here as a callback function for handling input changes, thats why its giving a warning
+  const sendNotificationSettings = () => {
+    axios
+      .patch("http://localhost:5021/AlertsNotification/3", {
+        id: 3,
+        upperEnabled: upperNotificationToggle,
+        lowerEnabled: lowerNotificationToggle
+      })
+      .then((response) => {
+        console.log("Notification settings sent successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error sending notification settings:", error);
+      });
   };
 
   return (
@@ -132,7 +136,7 @@ function WaterLevel() {
           <div className="box1">
             <div className="lastFetched" id="left">
               {/* !!!!!Change the plant.waterTemperature to the name of the actual value passed in the json object */}
-              <p>Last Fetched at: <TimeDisplay /> - {plant.waterLevel} ml/cm</p>
+              <p>Last Fetched at: <TimeDisplay /> - {plant.waterLevelInMillimeters} ml/cm</p>
               {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
               {isInDangerZone && <p id="error">The Current Levels Are In Danger Zone!</p>}
@@ -159,12 +163,15 @@ function WaterLevel() {
             />
         </div>
         <div className="notifications">
-          <p>Notifications: </p>
-          {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
-          <p>Upper: <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/> Lower: <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
-        </div>
+      <p>Notifications: Upper: {upperNotificationToggle ? "Enabled" : "Disabled"}, Lower: {lowerNotificationToggle ? "Enabled" : "Disabled"}</p>
+      <p>
+        Upper: <Switch isToggled={upperNotificationToggle} onToggle={handleToggleUpperNotification} /> 
+        Lower: <Switch isToggled={lowerNotificationToggle} onToggle={handleToggleLowerNotification} />
+      </p>
+      <button id="notification-button" onClick={sendNotificationSettings}>Update Notifications</button>
+    </div>
         <div className="graph">
-          <p>Graph:</p>
+          <h3>Graph:</h3>
           <Chart dataKey="waterLevel" yAxisLabel="Water Level (ml/cm)" />
         </div>
       </div>
