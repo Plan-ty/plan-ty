@@ -7,8 +7,10 @@ const Home = () => {
   return (
     <div id="home">
       <h1>Welcome to the Home Page</h1>
+      <div className="homeContainer">
       <MotorToggle />
       <EnergyUsage />
+      </div>
       <Dashboard />
     </div>
   );

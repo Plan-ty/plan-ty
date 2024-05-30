@@ -21,14 +21,17 @@ const DangerThresholds = ({
 
   return (
     <div className="dangerThresholds" id="left">
-      <p>Danger Levels:</p>
-      <p data-cy="war">Upper Threshold: {upperDangerThreshold} Lower Threshold: {lowerDangerThreshold}</p>
+      <h3>Danger Levels:</h3>
+      <div className='inputContainer'>
+      <p id='upperThresholdLabel' data-cy="war">Upper Threshold: {upperDangerThreshold}</p>
+      <p id='lowerThrsholdLabel' data-cy="war">Lower Threshold: {lowerDangerThreshold}</p>
+      </div>
       <input
         id="upper"
         type="text"
         value={upperDangerInput}
         onChange={(event) => setUpperDangerInput(event.target.value)}
-        placeholder="Enter Upper Level"
+        placeholder=" Enter Upper Level"
       />
       <button className="button1" onClick={handleSetUpper}>Set Upper</button>
       <input
@@ -36,9 +39,9 @@ const DangerThresholds = ({
         type="text"
         value={lowerDangerInput}
         onChange={(event) => setLowerDangerInput(event.target.value)}
-        placeholder="Enter Lower Level"
+        placeholder=" Enter Lower Level"
       />
-      <button className="button2" onClick={handleSetLower}>Set Lower</button>
+      <button className="button2" id='button2Danger' onClick={handleSetLower}>Set Lower</button>
     </div>
   );
 };

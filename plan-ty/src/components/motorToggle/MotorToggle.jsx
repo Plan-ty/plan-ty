@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./MotorToggle.css";
+import "../home/Home.css";
 
 //For testing with Json
-const API_URL = "https://jsonplaceholder.typicode.com";
+//const API_URL = "https://jsonplaceholder.typicode.com";
 //replace with the real API URL:
-//const API_URL = 'http://backend-url/api';
+const API_URL = "http://localhost:5021/Plants";
 
 const MotorToggle = () => {
   const [motorState, setMotorStateInternal] = useState(false);
 
   const getMotorState = async () => {
     try {
-      const response = await axios.get(`${API_URL}/posts/1`); // for testing
-      // const response = await axios.get(`${API_URL}/motor-state`);
+      //const response = await axios.get(`${API_URL}/posts/1`); // for testing
+      const response = await axios.get(`${API_URL}/ToggleWaterFlowCorrection`);
       return response.data;
     } catch (error) {
       console.error("Error fetching motor state:", error);
@@ -24,8 +25,11 @@ const MotorToggle = () => {
   const setMotorState = async (state) => {
     try {
       // Using JSONPlaceholder's /posts endpoint for testing
-      await axios.put(`${API_URL}/posts/1`, { userId: state ? 1 : null });
-      // const response = await axios.post(`${API_URL}/motor-state`, { state });
+      //await axios.put(`${API_URL}/posts/1`, { userId: state ? 1 : null });
+      await axios.post(
+        "http://192.168.156.250:5021/Plants/1/ToggleWaterFlowCorrection",
+        { state }
+      );
       //or
       // const response = await axios.put(`${API_URL}/motor/state`, { state });
       //return response.data;
@@ -40,7 +44,8 @@ const MotorToggle = () => {
       try {
         const data = await getMotorState();
         // Assuming the 'userId' field represents the motor state in the response data
-        setMotorStateInternal(Boolean(data.userId)); // Convert userId to boolean for motor state
+        //setMotorStateInternal(Boolean(data.userId)); // Convert userId to boolean for motor state
+        setMotorStateInternal(Boolean(data.state));
         //setMotorStateInternal(data.state);
       } catch (error) {
         console.error("Error fetching motor state:", error);
