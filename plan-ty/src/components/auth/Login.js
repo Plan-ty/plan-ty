@@ -38,6 +38,7 @@ const Login = ({ setToken }) => {
                 const token = response.headers.authorization?.split(" ")[1];
                 console.log('Token:', token); // Debug log
                 sessionStorage.setItem("jwt", token);
+                localStorage.setItem("token", token);
                 setToken(token); // Set token in parent component
                 console.log('Redirecting to home page...'); // Debug log
                 navigate("/home", { replace: true }); // Redirect to home page
