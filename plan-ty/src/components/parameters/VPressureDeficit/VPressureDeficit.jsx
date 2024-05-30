@@ -178,8 +178,9 @@ function VPressureDeficit() {
           <Chart dataKey="vpd" yAxisLabel="VPD (kPa)" />
         </div>
       </div>
-    </div>
+  
   );
+
 }
 
 export default VPressureDeficit;
