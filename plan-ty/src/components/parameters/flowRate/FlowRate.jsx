@@ -172,7 +172,7 @@ function FlowRate() {
       <button id="notification-button" onClick={sendNotificationSettings}>Update Notifications</button>
     </div>
           <div className="graph">
-            <p>Graph:</p>
+            <h3>Graph:</h3>
             <Chart dataKey="flowRate" yAxisLabel="Flow Rate (GPM)" />
           </div>
         </div>

@@ -166,7 +166,6 @@ function VPressureDeficit() {
             lowerWarningThreshold={thresholds.lowerWarning}
           />
         </div>
-        <div className="notifications">
       <p>Notifications: Upper: {upperNotificationToggle ? "Enabled" : "Disabled"}, Lower: {lowerNotificationToggle ? "Enabled" : "Disabled"}</p>
       <p>
         Upper: <Switch isToggled={upperNotificationToggle} onToggle={handleToggleUpperNotification} /> 
@@ -175,7 +174,7 @@ function VPressureDeficit() {
       <button id="notification-button" onClick={sendNotificationSettings}>Update Notifications</button>
     </div>
         <div className="graph">
-          <p>Graph:</p>
+          <h3>Graph:</h3>
           <Chart dataKey="vpd" yAxisLabel="VPD (kPa)" />
         </div>
       </div>

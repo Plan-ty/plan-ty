@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./MotorToggle.css";
+import "../home/Home.css";
 
 //For testing with Json
 //const API_URL = "https://jsonplaceholder.typicode.com";

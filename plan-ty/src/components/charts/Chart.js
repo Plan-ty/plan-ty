@@ -17,10 +17,11 @@ const Chart = ({ dataKey, yAxisLabel }) => { // Accept props for data key and Y-
     datasets: [
       {
         backgroundColor: "rgba(255,255,255)",
-        borderColor: "rgba(255,99,132,1)",
+        borderColor: "rgba(249,99,132,1)",
         borderWidth: 2,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
+        /*hoverBackgroundColor: "rgba(255,99,132,0.4)",*/
+        hoverBackgroundColor: "rgb(255, 255, 255)",
+        hoverBorderColor: "rgba(255,255,255,1)",
         data: []
       }
     ]
@@ -78,7 +79,7 @@ const Chart = ({ dataKey, yAxisLabel }) => { // Accept props for data key and Y-
   
 
   const lineBackgroundColor = {
-    backgroundColor: "rgb(230, 230, 230)"
+    backgroundColor: "rgb(255, 255, 255)"
   };
 
   return (

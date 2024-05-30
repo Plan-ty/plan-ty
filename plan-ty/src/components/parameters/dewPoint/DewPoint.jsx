@@ -174,7 +174,7 @@ function DewPoint() {
       <button id="notification-button" onClick={sendNotificationSettings}>Update Notifications</button>
     </div>
           <div className="graph">
-            <p>Graph:</p>
+            <h3>Graph:</h3>
             <Chart dataKey="dewPoint" yAxisLabel="Dew Point (°C)" />
           </div>
         </div>

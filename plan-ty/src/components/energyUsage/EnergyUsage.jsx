@@ -1,5 +1,6 @@
     import React, { useState, useEffect } from "react";
     import axios from "axios";
+    import "../home/Home.css";
 
     const EnergyUsage = () => {
 
@@ -22,7 +23,7 @@
 
           return (
             <div className="energyUsage">
-                <p>Energy Usage(J): {energy} </p>
+                <h3>Energy Usage(J): {energy} </h3>
 
             </div>
           )

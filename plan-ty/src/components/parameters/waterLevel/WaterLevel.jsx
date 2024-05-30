@@ -171,7 +171,7 @@ function WaterLevel() {
       <button id="notification-button" onClick={sendNotificationSettings}>Update Notifications</button>
     </div>
         <div className="graph">
-          <p>Graph:</p>
+          <h3>Graph:</h3>
           <Chart dataKey="waterLevel" yAxisLabel="Water Level (ml/cm)" />
         </div>
       </div>
