@@ -13,7 +13,7 @@ RUN npm install
 # Copy the rest of the application files
 COPY . .
 
-#Expose
+# Expose
 EXPOSE 3000
 
 # Run the command to start the app
