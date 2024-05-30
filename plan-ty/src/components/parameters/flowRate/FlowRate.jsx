@@ -136,12 +136,15 @@ function FlowRate() {
         <h1>WATER FLOW RATE</h1>
         <div className="container">
           <div className="box1">
+
             <div className="lastFetched" id="left">
               <p>Last Fetched at: <TimeDisplay /> - {plant.waterFlow} gallons/square foot</p>
               {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
               {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
               {isInDangerZone && <p id="error">The Current Levels Are In Danger Zone!</p>}
             </div> 
+
+          
           </div>
           <div className="box2">
             <DangerThresholds

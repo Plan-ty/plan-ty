@@ -18,6 +18,9 @@
     "resize-observer-polyfill": "^1.5.1",
     "web-vitals": "^2.1.4"
   },
+
+  "homepage": "https://Plan-ty.github.io/plan-ty",
+
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
