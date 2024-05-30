@@ -8,15 +8,13 @@ import DangerThresholds from "../../inputs/DangerThresholds";
 import TimeDisplay from "../../timeDisplay/TimeDisplay";
 
 function WaterTemp() {
-  const [plant, setPlant] = useState([]);
+  const [plant, setPlant] = useState({});
   const [upperDangerInput, setUpperDangerInput] = useState('');
   const [lowerDangerInput, setLowerDangerInput] = useState('');
   const [upperWarningInput, setUpperWarningInput] = useState('');
   const [lowerWarningInput, setLowerWarningInput] = useState('');
   const [upperNotificationToggle, setUpperNotificationToggle] = useState(false);
   const [lowerNotificationToggle, setLowerNotificationToggle] = useState(false);
-  const [isToggled, setIsToggledUpper] = useState(false);
-  const [isToggledLower, setIsToggledLower] = useState(false);
   const [thresholds, setThresholds] = useState({
     upperWarning: null,
     lowerWarning: null,
@@ -24,6 +22,12 @@ function WaterTemp() {
     lowerDanger: null,
   });
   const [isInDangerZone, setIsInDangerZone] = useState(false);
+
+  useEffect(() => {
+    fetchData();
+    fetchTemperature();
+    fetchNotificationData();
+  }, []);
 
   useEffect(() => {
     if (plant.waterTemperature < thresholds.lowerDanger || plant.waterTemperature > thresholds.upperDanger) {
@@ -48,7 +52,29 @@ function WaterTemp() {
       console.error("Error fetching data:", error);
     }
   };
-  if (!plant) return null;
+
+  const fetchTemperature = async () => {
+    await axios
+    //!!!!!change the link here for connecting to actual backend
+      .get("http://localhost:5021/temperature")
+      .then((response) => {
+        setPlant(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  const fetchNotificationData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5021/AlertsNotification/0");
+      console.log("Fetched notification data:", response.data);
+      setUpperNotificationToggle(response.data.upperEnabled);
+      setLowerNotificationToggle(response.data.lowerEnabled);
+    } catch (error) {
+      console.error("Error fetching notification data:", error);
+    }
+  };
 
   const sendThresholdData = (upperThreshold, lowerThreshold, thresholdType) => {
     const data = {
@@ -58,7 +84,7 @@ function WaterTemp() {
       max: thresholds.upperDanger,
       min: thresholds.lowerDanger,
     };
-  
+
     if (thresholdType === 'warning') {
       if (upperThreshold !== undefined) data.warningMax = upperThreshold;
       if (lowerThreshold !== undefined) data.warningMin = lowerThreshold;
@@ -66,7 +92,7 @@ function WaterTemp() {
       if (upperThreshold !== undefined) data.max = upperThreshold;
       if (lowerThreshold !== undefined) data.min = lowerThreshold;
     }
-  
+
     axios
       .patch("http://localhost:5021/Plants/thresholds", data)
       .then((response) => {
@@ -77,132 +103,77 @@ function WaterTemp() {
         console.error("Error sending threshold:", error);
       });
   };
-  
-  
 
-  const toggleUpperNotification = () => {
-    const newUpperNotificationToggle = !upperNotificationToggle;
-  setUpperNotificationToggle(newUpperNotificationToggle);
-  
-  // Send notification status to backend for upper threshold
-  axios
-    .post("http://192.168.156.250:5021/Plants/1/temperature", {
-      upperEnabled: newUpperNotificationToggle,
-      lowerEnabled: lowerNotificationToggle // Keep lower threshold status unchanged
-    })
-    .then((response) => {
-      console.log("Upper Notification status sent successfully:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error sending upper notification status:", error);
-    });
-   
+  const handleToggleUpperNotification = () => {
+    const newToggleState = !upperNotificationToggle;
+    setUpperNotificationToggle(newToggleState);
   };
 
-  const toggleLowerNotification = () => {
-    const newLowerNotificationToggle = !lowerNotificationToggle;
-  setLowerNotificationToggle(newLowerNotificationToggle);
-
-  // Send notification status to backend for lower threshold
-  axios
-    .post("http://192.168.156.250:5021/Plants/1/temperature", {
-      upperEnabled: upperNotificationToggle, // Keep upper threshold status unchanged
-      lowerEnabled: newLowerNotificationToggle
-    })
-    .then((response) => {
-      console.log("Lower Notification status sent successfully:", response.data);
-    })
-    .catch((error) => {
-      console.error("Error sending lower notification status:", error);
-    });
-  };
-  
-   // eslint-disable-next-line
-  const handleInputChange = (event, setValue) => {
-    setValue(event.target.value);
-    //indirectly used here as a callback function for handling input changes, thats why its giving a warning
+  const handleToggleLowerNotification = () => {
+    const newToggleState = !lowerNotificationToggle;
+    setLowerNotificationToggle(newToggleState);
   };
 
-  // console.log(plant.waterTemperature)
-
-  return (
-    
-      <div>
-        <h1>WATER TEMPERATURE</h1>
-        <div className="container">
-          <div className="box1">
-            <div className="lastFetched" id="left">
-              {/* !!!!!Change the plant.waterTemperature to the name of the actual value passed in the json object */}
-              <p id="fetched">Last Fetched at: <TimeDisplay /> - {plant.waterTemperature}°C</p>
-              {/* {data.map((item) => ( <div key={item.id}>{item.name}</div> ))} */}
-              {/* {data.map((item) => (<div key={item.id}>{item.waterTemperature}</div>))} */}
-              {isInDangerZone && <p id="error">The Current Levels Are In Danger Zone!</p>}
-            </div>
-          </div>
-          <div className="box2">
-            <DangerThresholds
-              upperDangerInput={upperDangerInput}
-              setUpperDangerInput={setUpperDangerInput}
-              lowerDangerInput={lowerDangerInput}
-              setLowerDangerInput={setLowerDangerInput}
-              sendThresholdData={sendThresholdData}
-              upperDangerThreshold={thresholds.upperDanger}
-              lowerDangerThreshold={thresholds.lowerDanger}
-            />
-            <WarningThresholds
-              upperWarningInput={upperWarningInput}
-              setUpperWarningInput={setUpperWarningInput}
-              lowerWarningInput={lowerWarningInput}
-              setLowerWarningInput={setLowerWarningInput}
-              sendThresholdData={sendThresholdData}
-              upperWarningThreshold={thresholds.upperWarning}
-              lowerWarningThreshold={thresholds.lowerWarning}
-            />
-          </div>
-          <div className="notifications">
-            <h3>Notifications: </h3>
-            {/* {plant.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))} */}
-            <div className="notifContainer">
-            <p id="upp"> Upper   <Switch isToggledUpper={isToggled} onToggle={() => setIsToggledUpper(!isToggled)}/></p>
-            <p id="low"> Lower   <Switch isToggled={isToggledLower} onToggle={() => setIsToggledLower(!isToggledLower)}/></p>
-
-            </div>
-          </div>
-          <div className="graph">
-            <h3>Graph:</h3>
-            <Chart dataKey="waterTemperature" yAxisLabel="Water Temperature (°C)" />
-          </div>
-        </div>
-    </div>  
-);
-}
-
-
-export default WaterTemp;
-
-/*
-
-const sendData = () => {
+  const sendNotificationSettings = () => {
     axios
-      .post("http://localhost:5021/Plants/thresholds", inputValue )
+      .patch("http://localhost:5021/AlertsNotification/0", {
+        upperEnabled: upperNotificationToggle,
+        lowerEnabled: lowerNotificationToggle
+      })
       .then((response) => {
-        console.log("Data sent successfully:", response.data);
-        // After sending the data, fetch updated data to refresh the view
-        //fetchData();
-        setInputValue(""); // Clear input field
+        console.log("Notification settings sent successfully:", response.data);
       })
       .catch((error) => {
-        console.error("Error sending data:", error);
+        console.error("Error sending notification settings:", error);
       });
   };
-  
 
-<div className="notifications">
-            <p>Notifications: {data.map((item) => ( <div key={item.id}> Upper: {item.name}, Lower: {item.name}</div> ))}</p>
-              { {data.map((item) => (<div key={item.id}> Upper: {item.upperNotif}, Lower: {item.lowerNotif}</div>))} }
-              <p>
-              Upper:{" "}<button onClick={toggleUpperNotification}>{upperNotificationToggle ? "On" : "Off"}</button>{" "}
-              Lower:{" "}<button onClick={toggleLowerNotification}>{lowerNotificationToggle ? "On" : "Off"}</button>
-            </p>
-          </div>   
-*/
+  return (
+    <div>
+  <h1>WATER TEMPERATURE</h1>
+  <div className="container">
+    <div className="box1">
+      <div className="lastFetched" id="left">
+        <p>Last Fetched at: <TimeDisplay /> - {plant.waterTemperature}°C</p>
+        {isInDangerZone && <p id="error">The Current Levels Are In Danger Zone!</p>}
+      </div>
+    </div>
+    <div className="box2">
+      <DangerThresholds
+        upperDangerInput={upperDangerInput}
+        setUpperDangerInput={setUpperDangerInput}
+        lowerDangerInput={lowerDangerInput}
+        setLowerDangerInput={setLowerDangerInput}
+        sendThresholdData={sendThresholdData}
+        upperDangerThreshold={thresholds.upperDanger}
+        lowerDangerThreshold={thresholds.lowerDanger}
+      />
+      <WarningThresholds
+        upperWarningInput={upperWarningInput}
+        setUpperWarningInput={setUpperWarningInput}
+        lowerWarningInput={lowerWarningInput}
+        setLowerWarningInput={setLowerWarningInput}
+        sendThresholdData={sendThresholdData}
+        upperWarningThreshold={thresholds.upperWarning}
+        lowerWarningThreshold={thresholds.lowerWarning}
+      />
+    </div>
+    <div className="notifications">
+      <p>Notifications: Upper: {upperNotificationToggle ? "Enabled" : "Disabled"}, Lower: {lowerNotificationToggle ? "Enabled" : "Disabled"}</p>
+      <p>
+        Upper: <Switch isToggled={upperNotificationToggle} onToggle={handleToggleUpperNotification} /> 
+        Lower: <Switch isToggled={lowerNotificationToggle} onToggle={handleToggleLowerNotification} />
+      </p>
+      <button id="notification-button" onClick={sendNotificationSettings}>Update Notifications</button>
+    </div>
+    <div className="graph">
+      <p>Graph:</p>
+      <Chart dataKey="waterTemperature" yAxisLabel="Water Temperature (°C)" />
+    </div>
+  </div>
+</div>
+
+  );
+}
+
+export default WaterTemp;

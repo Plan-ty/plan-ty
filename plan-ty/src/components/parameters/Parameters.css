@@ -46,7 +46,7 @@ input[type="text"], textarea {
    align-items:center;
 }
   
-.button, .button1, .button2{
+.button, .button1, .button2, #notification-button {
     background-color: #D9D9D9;
     border-radius: 8px;
     cursor: pointer;
@@ -55,7 +55,7 @@ input[type="text"], textarea {
     padding-bottom: 4px;
 }
 
-.button:hover, .button1:hover, .button2:hover{
+.button:hover, .button1:hover, .button2:hover, #notification-button:hover{
     background-color: #AEEAC9;
    
 }
@@ -166,3 +166,4 @@ h3{
 #fetched{
     font-size: 19px;
 }
+
