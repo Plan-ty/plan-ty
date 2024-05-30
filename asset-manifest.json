@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/plan-ty/static/css/main.5958babf.css",
+    "main.js": "/plan-ty/static/js/main.e153d381.js",
+    "index.html": "/plan-ty/index.html",
+    "main.5958babf.css.map": "/plan-ty/static/css/main.5958babf.css.map",
+    "main.e153d381.js.map": "/plan-ty/static/js/main.e153d381.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5958babf.css",
+    "static/js/main.e153d381.js"
+  ]
+}
