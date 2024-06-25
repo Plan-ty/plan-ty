@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import NavBar from "./components/navBar/NavBar";
 import WaterTemp from "./components/parameters/waterTemp/WaterTemp";
 import FlowRate from "./components/parameters/flowRate/FlowRate";
@@ -21,7 +26,7 @@ function App() {
 
   useEffect(() => {
     const token = sessionStorage.getItem("jwt");
-    console.log('Token from sessionStorage:', token); // Debug log
+    console.log("Token from sessionStorage:", token); // Debug log
     setIsAuthenticated(!!token);
     const fetchProtectedData = async () => {
       if (token) {
@@ -53,7 +58,9 @@ function App() {
         <NavBar setToken={setToken} />
         <Routes>
           <Route path="/login" element={<Login setToken={setToken} />} />
-          {!isAuthenticated && <Route path="*" element={<Navigate to="/login" replace />} />}
+          {!isAuthenticated && (
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          )}
           {isAuthenticated && (
             <>
               <Route path="/home" element={<Home />} />
